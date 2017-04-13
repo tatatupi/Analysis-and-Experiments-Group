@@ -1,0 +1,89 @@
+---
+title: 'Estudo de Caso 01: Estimação de Quantidades Pecuniárias'
+author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Pereira"
+date: "17 de Abril, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Sumário
+
+Durante a aula do dia 11/04/2017 do curso *Design and Analysis of Experiments*, cada um dos 29 alunos presentes deu sua estimativa para duas perguntas do professor Felipe Campelo:
+
+1) Quantas moedas há no recipiente 1 (um copo de 200ml com moedas variadas padrão monetário Real)?
+2) Qual o valor total contido no recipiente 2 (um copo de 200ml com moedas de R$0,05)?
+
+No primeiro caso, as estimativas foram dadas de maneira cega (sem a interação entre alunos). No segundo caso, as estimativas foram dadas de maneira aberta (declarações sequenciais dos alunos em voz alta).
+
+Os propósitos deste estudo de caso são, com base nas estimativas fornecidas, a) **definir a quantidade e o valor real** das perguntas acima, além de b) **investigar se conjuntos de alunos de engenharia são bons estimadores de pequenas quantidades pecuniárias**.
+
+Para isso, inicialmente será feito um estudo de estatística descritiva do conjunto de dados coletados (as estimativas dos alunos), através de gráficos e descrições paramétricas, respondendo ao propósito **a** e obtendo uma ideia da qualidade do estimador conjunto de alunos de engenharia. 
+
+Como não se sabe, a priori, a quantidade real (ou a média real da variável aleatória *quantidade de moedas em um copo cheio de 200ml*), são propostos testes adicionais com experimentação, para aprofundar a investigação do propósito **b**, através do estudo das seguintes questões de interesse:
+
+- As estimativas rejeitam uma hipótese nula mais próxima da real? 
+- As estimativas de conjuntos de alunos são consistentes entre si?
+- As estimativas de conjuntos de alunos são sistematicamente rejeitadas por experimentação ?
+
+## Preparação e Exploração dos Dados
+
+Os dados coletados em sala são carregados no R e em seguida explorados, para se ter uma ideia dos valores obtidos
+
+```{r Carregando os dados}
+estimacao <- read.csv(file="./estimativa_da_sala.csv", header=TRUE, sep=";")
+```
+
+Primeiro, as estimativas de moedas são exploradas.
+
+```{r Explorando as estimativas de Moedas}
+summary(estimacao$Moedas)
+hist(estimacao$Moedas)
+shapiro.test(estimacao$Moedas)
+```
+
+Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
+Além disso, como não a a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
+
+Em seguida, as estimativas de valores são exploradas.
+
+```{r Explorando as estimativas de Valor}
+summary(estimacao$Valor)
+hist(estimacao$Valor)
+shapiro.test(estimacao$Valor)
+```
+
+No caso das estimativas de valor, a premissa de normalidade não pode ser assumida, uma vez que o valor de p do teste Shapiro-Wilk é maior do que 0.1 **[1]**. Essa diferença pode ser explicada pela não independência das observações, uma vez que foram feitas de forma aberta.
+Desta forma, devido à obliquidade da distribuição encontrada, a seleção da mediana como parâmetro para o estimador parece ser o mais adequado. **[2]**
+
+
+## Estatística Descritiva das Estimativas
+
+### Quantidade de Moedas no Recipiente 1
+
+As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
+
+Assume-se que:
+
+- Não houve interação entre os alunos (i.e. nenhum aluno trapaceou e consultou outros a respeito das estimativas ou leu do papel de um colega alguma estimativa)
+- Não houve erro na leitura das estimativas por parte do professor
+- Não houve erro na anotação das estimativas por parte do grupo
+
+No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às outras premissas, a verificação só poderiam ser feitas caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+
+
+```{r}
+
+
+```
+
+
+## Referências
+[1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551.
+
+[2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
