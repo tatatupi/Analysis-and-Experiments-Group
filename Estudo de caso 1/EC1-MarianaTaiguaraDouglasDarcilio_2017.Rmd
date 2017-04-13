@@ -48,7 +48,7 @@ shapiro.test(estimacao$Moedas)
 ```
 
 Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-Além disso, como não há a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
+Além disso, como não a a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
 
 Em seguida, as estimativas de valores são exploradas.
 
@@ -141,9 +141,97 @@ O desvio padrão encontrado, de R\$1.58, indica uma dispersão muito grande em tor
 
 Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, neste caso, resultados pouco precisos, o que poderia indicar uma má qualidade na estimação. Além disso, a premissa de que eles não possuem viés não pode ser confirmada a priori, uma vez que o valor real dos parâmetros não são conhecidos. Para aprofundar essa investigação, novos experimentos foram propostos, através da experimentação, como detalhado nas seções seguintes.
 
+## Planejamento Experimental
+
+Conforme mencionado no sumário, para aprofundar a investigação da qualidade dos estimadores formados por "conjuntos de alunos de engenharia", são propostos experimentos para responder a questões de interesse adicionais.
+
+### Recipiente I 
+
+#### As estimativas rejeitam uma hipótese nula mais próxima da real?
+
+O primeiro experimento a ser conduzido terá como método a Prova por Contradição através do teste de hipóteses. Ou seja, através de experimentos, serão criadas amostras da população de interesse, i.e. a variável aleatória *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, será definida uma hipótese nula (média do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+
+$$\begin{cases} H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e\end{cases}$$
+
+A partir de parâmetros experimentais adequados, os resultados poderão levar a duas conclusões:
+
+- $H_0$ rejeitada: como a hipótese nula é um valor mais próximo do real, caso ela seja rejeitada, pode-se concluir que, *para este caso específico*, conjuntos de alunos de engenharia não produziram um bom estimador, uma vez que "um estimador deve ser de alguma forma "próximo" do valor real do parâmetro desconhecido", de acordo com a Seção 7.2.1, de [3].
+
+- Falhou em rejeitar $H_0$: se, com as estimativas da sala, evidências suficientes não foram encontradas para rejeitar a hipótese nula, conclui-se que, *para este caso específico*, conjuntos de alunos de engenharia produziram um bom estimador.
+
+É importante explicar o termo destacado em itálico, que significa que as conclusões desse teste servem apenas para qualificar ou desqualificar os estimadores para uma estimativa específica, não podendo ser generalizada. Para tentar investigar mais profundamente, novos teste serão necessários.
+
+##### Desrição da coleta de dados
+        
+Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). COmo a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
+
+Para fins de reproducibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 43 de 5 centavos.
+
+A comparação das proporções de moedas do experimetno com o meio circulante nacional são apresentadas a seguir:
+
+``` {r proporção moedas experimentos}
+
+moedas_exp<-c(22,21,30,60,43)
+prop_exp<-round(moedas_exp/sum(moedas_exp)*100)
+prop_mcn<-c(16,13,14,30,28)
+moedas<-c("1","0,50","0,25","0,10","0,05")
+
+print(data.frame(moedas,prop_exp,prop_mcn))
+
+```
+
+Nota-se uma diferença pequena nas proporções das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximação do experimento com o real é boa.
+
+As moedas coletadas são apresentadas na figura abaixo:
+
+![Moedas utilizadas no experimento](./foto_moedas.png)
+
+Um exemplo de amostra coletada é apresentado na figura abaixo:
+
+![Exemplo de amostra](./foto_copo.png)
+
+
+As moedas foram reunidas em um estojo que era misturado antes de cada amostra. O copo era então inserido no estojo e enchido de moedas para ser contado. Ao ser removido do estojo, era feita uma avaliação pelo grupo se o nível de enchimento do copo era semelhante ao do dia das estimativas e, em caso negativo, uma nova amostra era coletada.
+
+Para as amostras aprovadas, a quantidade de moedas foi contada e anotada.
+
+Como o objetivo desse experimento é encontrar uma hipótese nula a ser usada na prova por contradição, não é necessário uma definição de tamanho amostral. A quantidade de amostras foi definida de forma qualitativa, observando-se a dispersão entre cada amostra.
+
+##### Análise Exploratória dos Dados
+
+Os resultados observados após 5 amostras foi considerado satisfatório (desvio padrão relativo pequeno), para se definir uma hipótese nula.
+
+``` {r experimento moedas}
+
+experimento <- read.csv(file="./resultados_experimentais.csv", header=FALSE, sep=";")
+
+```
+
+
+``` {r echo=FALSE}
+print(experimento$V1)
+cat("Média dos resultados experimentais é:",mean(experimento$V1))
+cat("Desvio padrão dos resultados experimentais é:",sd(experimento$V1))
+
+```
+
+##### Teste de Hipóteses
+
+Finalmente, um teste t pode ser realizado para 
+
+
+        
+- As estimativas rejeitam uma hipótese nula mais próxima da real? 
+- As estimativas de conjuntos de alunos são consistentes entre si?
+- As estimativas de conjuntos de alunos são sistematicamente rejeitadas por experimentação ?
+
 
 
 ## Referências
 [1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551.
 
 [2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
+
+[3] D.C. Montgomery, G.C. Runger, Applied Statistics and Probability for Engineers, 5th ed., Wiley, 2010.
+
+[4] http://www4.bcb.gov.br/adm/mecir/principal.asp. Acessado em 13/04/2017
