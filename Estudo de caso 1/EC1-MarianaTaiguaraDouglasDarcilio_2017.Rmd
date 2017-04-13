@@ -48,7 +48,7 @@ shapiro.test(estimacao$Moedas)
 ```
 
 Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-Além disso, como não a a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
+Além disso, como não há a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
 
 Em seguida, as estimativas de valores são exploradas.
 
@@ -58,13 +58,15 @@ hist(estimacao$Valor)
 shapiro.test(estimacao$Valor)
 ```
 
-No caso das estimativas de valor, a premissa de normalidade não pode ser assumida, uma vez que o valor de p do teste Shapiro-Wilk é maior do que 0.1 **[1]**. Essa diferença pode ser explicada pela não independência das observações, uma vez que foram feitas de forma aberta.
-Desta forma, devido à obliquidade da distribuição encontrada, a seleção da mediana como parâmetro para o estimador parece ser o mais adequado. **[2]**
+Assim como para as estimativas de moedas, a distribuição para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.01, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuição, pode ser explicada pela não independência dos dados, pelo fato de terem sido coletados de forma aberta.
+De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, será utilizado o parâmetro média para o estimador.
 
 
 ## Estatística Descritiva das Estimativas
 
 ### Quantidade de Moedas no Recipiente 1
+
+#### Descrição da coleta de dados
 
 As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
 
@@ -74,13 +76,71 @@ Assume-se que:
 - Não houve erro na leitura das estimativas por parte do professor
 - Não houve erro na anotação das estimativas por parte do grupo
 
-No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às outras premissas, a verificação só poderiam ser feitas caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às outras premissas, a verificação só poderia ser feita caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+
+#### Análise Estatística
+
+Após a análise exploratória dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas.
 
 
 ```{r}
-
-
+med_est_moed<-mean(estimacao$Moedas)
+desvio_pad_moed<-sd(estimacao$Moedas)
+erro_med_moed<-sd(estimacao$Moedas)/sqrt(length(estimacao$Moedas))
+inter_conf_moed<-c(med_est_moed-2*erro_med_moed,med_est_moed+2*erro_med_moed)
 ```
+```{r echo=FALSE}
+cat("Estimativa de Média é:",med_est_moed)
+cat("Intervalo de Confiança 95% é:",inter_conf_moed)
+cat("Desvio padrão do estimador é:",desvio_pad_moed)
+```
+
+Desta forma, considerando que o estimador em questão não posssui viés, i.e. $\begin{gather} E(\Phi)=\theta \end{gather}$, a quantidade de moedas no recipiente 1, com 95% de confiança, é de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar o a quantidade de moedas real no recipiente 1, considerando que ele não tenha viés e que sua distribuição seja normal.
+
+O desvio padrão encontrado, de 49.43, indica uma dispersão muito grande em torno da estimativa de média (56% do valor da média), o que indica uma precisão muito pequena do estimador. 
+
+### Valor no Recipiente 2
+
+#### Descrição da coleta de dados
+
+Para a segunda pergunta, as estimativas do valor contido no recipiente 2 foram dadas em voz alta, na ordem em que os alunos se encontravam e os grupos foram anotando as respostas. 
+
+Desta forma, será assumido apenas que:
+
+- Não houve erro na anotação das estimativas por parte do grupo
+
+Da mesma forma que a primeira estimativa, os valores anotados foram conferidos entre grupos para verificar essa premissa.
+
+#### Análise Estatística
+
+Após a análise exploratória dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas.
+
+
+```{r}
+med_est_val<-mean(estimacao$Valor)
+desvio_pad_val<-sd(estimacao$Valor)
+erro_med_val<-sd(estimacao$Valor)/sqrt(length(estimacao$Valor))
+inter_conf_val<-c(med_est_val-2*erro_med_val,med_est_val+2*erro_med_val)
+```
+
+```{r echo= FALSE}
+cat("Estimativa de Média é:",med_est_val)
+cat("Intervalo de Confiança 95% é:",inter_conf_val)
+cat("Desvio padrão do estimador é:",desvio_pad_val)
+```
+
+Desta forma, considerando que o estimador em questão não posssui viés, i.e. $\begin{gather} E(\Phi)=\theta \end{gather}$, o valor contido no recipiente 2, com 95% de confiança, é de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele não tenha viés e que sua distribuição seja normal.
+
+The method used to derive the interval has a hit rate of
+95%" - i.e., the interval generated has a 95% chance of "capturing"
+the true population parameter.
+
+O desvio padrão encontrado, de R\$1.58, indica uma dispersão muito grande em torno da estimativa de média (34% do valor da média), o que indica uma precisão muito pequena do estimador. No entanto, observou-se um valor percentual menor do que para a quantidade de moedas, que pode ser explicado pelo método de coleta de dados, em que cada aluno pode ter sido influenciado pela opinião dos colegas que estimaram antes dele.
+
+### Análise da Estatística Descritiva
+
+Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, neste caso, resultados pouco precisos, o que poderia indicar uma má qualidade na estimação. Além disso, a premissa de que eles não possuem viés não pode ser confirmada a priori, uma vez que o valor real dos parâmetros não são conhecidos. Para aprofundar essa investigação, novos experimentos foram propostos, através da experimentação, como detalhado nas seções seguintes.
+
 
 
 ## Referências
