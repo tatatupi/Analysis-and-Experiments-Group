@@ -3,8 +3,8 @@ title: 'Estudo de Caso 01: Estimação de Quantidades Pecuniárias'
 author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Pereira"
 date: "17 de Abril, 2017"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -48,7 +48,7 @@ shapiro.test(estimacao$Moedas)
 ```
 
 Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-Além disso, como não há a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
+Além disso, como não a a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
 
 Em seguida, as estimativas de valores são exploradas.
 
@@ -58,13 +58,15 @@ hist(estimacao$Valor)
 shapiro.test(estimacao$Valor)
 ```
 
-No caso das estimativas de valor, a premissa de normalidade não pode ser assumida, uma vez que o valor de p do teste Shapiro-Wilk é maior do que 0.1 **[1]**. Essa diferença pode ser explicada pela não independência das observações, uma vez que foram feitas de forma aberta.
-Desta forma, devido à obliquidade da distribuição encontrada, a seleção da mediana como parâmetro para o estimador parece ser o mais adequado. **[2]**
+Assim como para as estimativas de moedas, a distribuição para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.01, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuição, pode ser explicada pela não independência dos dados, pelo fato de terem sido coletados de forma aberta.
+De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, será utilizado o parâmetro média para o estimador.
 
 
 ## Estatística Descritiva das Estimativas
 
 ### Quantidade de Moedas no Recipiente 1
+
+#### Descrição da coleta de dados
 
 As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
 
@@ -74,16 +76,257 @@ Assume-se que:
 - Não houve erro na leitura das estimativas por parte do professor
 - Não houve erro na anotação das estimativas por parte do grupo
 
-No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às outras premissas, a verificação só poderiam ser feitas caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às outras premissas, a verificação só poderia ser feita caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+
+#### Análise Estatística
+
+Após a análise exploratória dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas.
 
 
 ```{r}
+med_est_moed<-mean(estimacao$Moedas)
+desvio_pad_moed<-sd(estimacao$Moedas)
+erro_med_moed<-sd(estimacao$Moedas)/sqrt(length(estimacao$Moedas))
+inter_conf_moed<-c(med_est_moed-2*erro_med_moed,med_est_moed+2*erro_med_moed)
+```
+```{r echo=FALSE}
+cat("Estimativa de Média é:",med_est_moed)
+cat("Intervalo de Confiança 95% é:",inter_conf_moed)
+cat("Desvio padrão do estimador é:",desvio_pad_moed)
+```
 
+Desta forma, considerando que o estimador em questão não posssui viés, i.e.:
+
+\begin{gather} 
+        E(\Phi)=\theta 
+\end{gather}
+
+A quantidade de moedas no recipiente 1, com 95% de confiança, é de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar o a quantidade de moedas real no recipiente 1, considerando que ele não tenha viés e que sua distribuição seja normal.
+
+O desvio padrão encontrado, de 49.43, indica uma dispersão muito grande em torno da estimativa de média (56% do valor da média), o que indica uma precisão muito pequena do estimador. 
+
+### Valor no Recipiente 2
+
+#### Descrição da coleta de dados
+
+Para a segunda pergunta, as estimativas do valor contido no recipiente 2 foram dadas em voz alta, na ordem em que os alunos se encontravam e os grupos foram anotando as respostas. 
+
+Desta forma, será assumido apenas que:
+
+- Não houve erro na anotação das estimativas por parte do grupo
+
+Da mesma forma que a primeira estimativa, os valores anotados foram conferidos entre grupos para verificar essa premissa.
+
+#### Análise Estatística
+
+Após a análise exploratória dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas.
+
+
+```{r}
+med_est_val<-mean(estimacao$Valor)
+desvio_pad_val<-sd(estimacao$Valor)
+erro_med_val<-sd(estimacao$Valor)/sqrt(length(estimacao$Valor))
+inter_conf_val<-c(med_est_val-2*erro_med_val,med_est_val+2*erro_med_val)
+```
+
+```{r echo= FALSE}
+cat("Estimativa de Média é:",med_est_val)
+cat("Intervalo de Confiança 95% é:",inter_conf_val)
+cat("Desvio padrão do estimador é:",desvio_pad_val)
+```
+
+Desta forma, considerando que o estimador em questão não posssui viés, o valor contido no recipiente 2, com 95% de confiança, é de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele não tenha viés e que sua distribuição seja normal.
+
+The method used to derive the interval has a hit rate of
+95%" - i.e., the interval generated has a 95% chance of "capturing"
+the true population parameter.
+
+O desvio padrão encontrado, de R\$1.58, indica uma dispersão muito grande em torno da estimativa de média (34% do valor da média), o que indica uma precisão muito pequena do estimador. No entanto, observou-se um valor percentual menor do que para a quantidade de moedas, que pode ser explicado pelo método de coleta de dados, em que cada aluno pode ter sido influenciado pela opinião dos colegas que estimaram antes dele.
+
+### Análise da Estatística Descritiva
+
+Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, neste caso, resultados pouco precisos, o que poderia indicar uma má qualidade na estimação. Além disso, a premissa de que eles não possuem viés não pode ser confirmada a priori, uma vez que o valor real dos parâmetros não são conhecidos. Para aprofundar essa investigação, novos experimentos foram propostos, através da experimentação, como detalhado nas seções seguintes.
+
+## Planejamento Experimental
+
+Conforme mencionado no sumário, para aprofundar a investigação da qualidade dos estimadores formados por "conjuntos de alunos de engenharia", são propostos experimentos para responder a questões de interesse adicionais.
+
+### Recipiente I 
+
+#### As estimativas rejeitam uma hipótese nula mais próxima da real?
+
+O primeiro experimento a ser conduzido terá como método a Prova por Contradição através do teste de hipóteses. Ou seja, através de experimentos, serão criadas amostras da população de interesse, i.e. a variável aleatória *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, será definida uma hipótese nula (média do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+
+\begin{gather} 
+        H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e
+\end{gather}
+
+A partir de parâmetros experimentais adequados, os resultados poderão levar a duas conclusões:
+
+- $H_0$ rejeitada: como a hipótese nula é um valor mais próximo do real, caso ela seja rejeitada, pode-se concluir que, *para este caso específico*, conjuntos de alunos de engenharia não produziram um bom estimador, uma vez que "um estimador deve ser de alguma forma "próximo" do valor real do parâmetro desconhecido", de acordo com a Seção 7.2.1, de [3].
+
+- Falhou em rejeitar $H_0$: se, com as estimativas da sala, evidências suficientes não foram encontradas para rejeitar a hipótese nula, conclui-se que, *para este caso específico*, conjuntos de alunos de engenharia produziram um bom estimador.
+
+É importante explicar o termo destacado em itálico, que significa que as conclusões desse teste servem apenas para qualificar ou desqualificar os estimadores para uma estimativa específica, não podendo ser generalizada. Para tentar investigar mais profundamente, novos teste serão necessários.
+
+##### Desrição da coleta de dados
+        
+Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). COmo a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
+
+Para fins de reproducibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 43 de 5 centavos.
+
+A comparação das proporções de moedas do experimetno com o meio circulante nacional são apresentadas a seguir:
+
+``` {r proporção moedas experimentos}
+
+moedas_exp<-c(22,21,30,60,43)
+prop_exp<-round(moedas_exp/sum(moedas_exp)*100)
+prop_mcn<-c(16,13,14,30,28)
+moedas<-c("1","0,50","0,25","0,10","0,05")
+
+print(data.frame(moedas,prop_exp,prop_mcn))
 
 ```
+
+Nota-se uma diferença pequena nas proporções das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximação do experimento com o real é boa.
+
+As moedas coletadas são apresentadas na figura abaixo:
+
+![Moedas utilizadas no experimento](./foto_moedas.png)
+
+Um exemplo de amostra coletada é apresentado na figura abaixo:
+
+![Exemplo de amostra](./foto_copo.png)
+
+
+As moedas foram reunidas em um estojo que era misturado antes de cada amostra. O copo era então inserido no estojo e enchido de moedas para ser contado. Ao ser removido do estojo, era feita uma avaliação pelo grupo se o nível de enchimento do copo era semelhante ao do dia das estimativas e, em caso negativo, uma nova amostra era coletada.
+
+É importante ressaltar os pontos fracos dessas premissas:
+
+- Caso a proporção das moedas utilizadas para encher o copo seja muito distante da utilizada no experimento ou o formato do copo seja muito diferente, as amostras observadas podem conter um viés significativa, prejudicando o experimento. Para evitar esse problema, poderia-se verificar a proporção real ou utilizar o mesmo conjunto de moedas e copo utilizado pelo professor.
+- O nível de enchimento também pode influenciar na quantidade de amostras. O grupo tentou ser o mais fiel possível, mas um erro sistemático nessa estimativa pode gerar um viés. O que poderia ter sido feito para evitar essa questão é a medição do espaço vazio do copo utilizado na sala de aula e a replicação poderia ser mais fiel.
+
+
+Para as amostras aprovadas, a quantidade de moedas foi contada e anotada.
+
+Como o objetivo desse experimento é encontrar uma hipótese nula a ser usada na prova por contradição, não é necessário uma definição de tamanho amostral. A quantidade de amostras foi definida de forma qualitativa, observando-se a dispersão entre cada amostra.
+
+##### Análise Exploratória dos Dados
+
+Os resultados observados após 5 amostras foi considerado satisfatório (desvio padrão relativo pequeno), para se definir uma hipótese nula.
+
+``` {r experimento moedas}
+
+experimento <- read.csv(file="./resultados_experimentais.csv", header=FALSE, sep=";")
+
+```
+
+
+``` {r echo=FALSE}
+print(experimento$V1)
+cat("Média dos resultados experimentais é:",mean(experimento$V1))
+cat("Desvio padrão dos resultados experimentais é:",sd(experimento$V1))
+
+```
+
+##### Teste de Hipóteses
+
+Para o teste de hipóteses para a prova de contradição, queremos ter certeza que, no caso de rejeição da hipótese nula, a conclusão ser forte. Dessa forma, é importante minizar o erro tipo I, que seria a rejeição da hipótese nula, quando ela é verdadeira. Por isso, será considerado um nível de confiança de 99%
+
+``` {r teste de hipoteses moeda}
+t.test(estimacao$Moedas,mu=mean(experimento$V1),conf.level = 0.99)
+
+```
+        
+De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=0.007998. Ou seja, até um nível de confiança de 99.2%, a hipótese nula seria rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz uma parâmetro com viés.
+
+Para que uma conclusão mais generalizada possa ser alcançada, outro teste deve ser proposto.
+
+#### As estimativas de conjuntos de alunos são sistematicamente rejeitadas por experimentação?
+
+## Planejamento Experimental
+
+As estimativas dos alunos foram divididas em 5 grupos (4 com 5 estimativas e 1 com 4), para que vários testes possam ser realizadas para o estimador. Como as observações foram feitas de forma independente, não há necessidade de randomização das estimativas.
+
+Nesse caso, será feita uma abordagem diferente, na qual a hipótese nula será a media de cada grupo ($\mu_g$) e o experimento será utilizado no teste de hipóteses, ou seja:
+
+\begin{gather} 
+        H_0: \mu = \mu_g \\ H_1: \mu\neq\mu_g
+\end{gather}
+
+Desta forma, é possível se ter um maior controle do experimento, uma vez que o tamanho amostral pode ser definido para se obter os parâmetros desejados.
+
+Nesse caso, como já é esperado que a média dos grupos não seja próxima da média real, é necessário minimizar o erro de tipo II.
+Para isso, uma alta potência será necessária e será garantida pelo cálculo do tamanho amostral. Os parâmetros definidos são:
+
+- Potência = 0,90 (para evitar erros do tipo II)
+- $\delta$ = 5 (aproximadamente o desvio padrão do experimento já realizado e 1% do desvio padrão das estimativas)
+- $\sigma$ = 4.9 (desvio padrão do experimento realizado)
+- $\alpha$ = 0.1 (não precisa ser alto)
+
+```` {r power teste para os grupos}
+power.t.test(power=0.9,delta=5,sd=4.9,sig.level=0.1,type="one.sample",alternative="two.sided")
+
+```
+
+O tamanho amostral requerido para se atingir a potência desejada, considerando os parâmetros estimados é de 10, i.e., 5 testes adicionais são necessários.
+
+A seguir os grupos são divididos e os valores das hipóteses nulas de cada um são calculados:
+
+```` {r criando grupos}
+h_0<-c(0,0,0,0,0)
+aux<-0
+for (i in 1:5) {
+        aux<-estimacao$Moedas[((i-1)*6+1):((i-1)*6+6)]
+        h_0[i]<-mean(aux,na.rm = TRUE)
+}
+```
+
+Em seguida é realizado o teste para a hipótese nula de cada grupo e os valores do intervalo de confiança, além do valor p são guardados em uma tabela.
+
+```` {r teste t dos grupos}
+library(broom)
+conf_low<-c(0,0,0,0,0)
+conf_high<-c(0,0,0,0,0)
+p_value<-c(0,0,0,0,0)
+ttest<-0
+reject<-0
+for (i in 1:5) {
+        ttest<-tidy(t.test(experimento$V1,mu=h_0[i],conf.level = 0.9))
+        conf_low[i]<-ttest$conf.low
+        conf_high[i]<-ttest$conf.high
+        p_value[i]<-ttest$p.value
+        if (h_0[i]<conf_low[i] | h_0[i]>conf_high[i]) {
+                reject<-reject+1
+        }
+}
+```
+
+```` {r echo=FALSE}
+cat("A hipótese nula foi rejeitada", reject, "vezes do total de 5 grupos")
+cat("Os valores p dos testes foram", p_value)
+
+```
+
+Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com potência maior do que 90% e valor p maior do que 0.009 para todos os testes, pode-se concluir que, de forma sistemática o estimador *conjunto de alunos de engenharia* produz estimativas ruins.
+
+### Valor no Recipiente 2
+
+#### As estimativas rejeitam uma hipótese nula mais próxima da real?
+
+Da mesma forma que foi feito para a quantidade de moedas, será feito um experimento com Prova por Contradição para o teste de hipóteses.
+
+##### Desrição da coleta de dados
+
+Nesse caso, não foi possível obter quantidade suficiente 
+
 
 
 ## Referências
 [1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551.
 
 [2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
+
+[3] D.C. Montgomery, G.C. Runger, Applied Statistics and Probability for Engineers, 5th ed., Wiley, 2010.
+
+[4] http://www4.bcb.gov.br/adm/mecir/principal.asp. Acessado em 13/04/2017
