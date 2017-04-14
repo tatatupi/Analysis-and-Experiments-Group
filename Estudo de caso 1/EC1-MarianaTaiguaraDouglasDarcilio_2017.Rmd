@@ -1,4 +1,4 @@
----
+        ---
 title: 'Estudo de Caso 01: Estimação de Quantidades Pecuniárias'
 author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Pereira"
 date: "17 de Abril, 2017"
@@ -260,7 +260,7 @@ Para isso, uma alta potência será necessária e será garantida pelo cálculo 
 - $\sigma$ = 4.9 (desvio padrão do experimento realizado)
 - $\alpha$ = 0.1 (não há necessidade de baixo nível de significância)
 
-```` {r power teste para os grupos}
+``` {r power teste para os grupos}
 power.t.test(power=0.9,delta=5,sd=4.9,sig.level=0.1,type="one.sample",alternative="two.sided")
 
 ```
@@ -269,7 +269,7 @@ O tamanho amostral requerido para se atingir a potência desejada, considerando 
 
 A seguir os grupos são divididos e os valores das hipóteses nulas de cada um são calculados:
 
-```` {r criando grupos}
+``` {r criando grupos}
 h_0<-c(0,0,0,0,0)
 aux<-0
 for (i in 1:5) {
@@ -282,7 +282,7 @@ for (i in 1:5) {
 
 Em seguida é realizado o teste para a hipótese nula de cada grupo e os valores do intervalo de confiança, além do valor p são guardados em uma tabela.
 
-```` {r teste t dos grupos}
+``` {r teste t dos grupos}
 library(broom)
 conf_low<-c(0,0,0,0,0)
 conf_high<-c(0,0,0,0,0)
@@ -300,7 +300,7 @@ for (i in 1:5) {
 }
 ```
 
-```` {r echo=FALSE}
+``` {r echo=FALSE}
 cat("A hipótese nula foi rejeitada", reject, "vezes do total de 5 grupos")
 cat("Os valores p dos testes foram", p_value)
 
@@ -320,10 +320,10 @@ Desta forma, foi necessário a realização de aproximações e apenas uma amost
 
 Além disso, para que as estimativas possam ser divididas em grupos, elas deveriam ser independentes, uma vez que se há dependência entre as estimativas, não adiantaria separá-las em grupos para uma conclusão mais generalizada. Para confirmar essa expectativa de dependência entre dados, é proposto o teste Durbin-Watson, que testa a autocorrelação serial **[5]**. Se o resultado para o valor p do teste for significativamente baixo, a hipótese nula de que não há autocorrelação será rejeitada.
 
-```` {r independeica}
+``` {r independeica}
 library(lmtest)
 dwtest(estimacao$Valor~1)
-````
+```
 
 Um valor p de 0.33 é muito alto, indicando que não há evidências suficientes para rejeitar a hipótese de que não há correlação. Desta forma, os grupos poderão ser separados, mas, desta vez, terão que ser testados pela Prova por Contradição, já que não é possível variar o tamanho amostral do experimento.
 
