@@ -4,13 +4,21 @@ author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Per
 date: "17 de Abril, 2017"
 output:
   pdf_document: default
-  html_document: default
+  html_document:
+    fig_height: 4
+    fig_width: 6
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
+```{r include=FALSE,results='hide',warning=FALSE,echo=FALSE}
+
+ if (!require(broom, quietly = TRUE)){
+        install.packages("broom")
+      }
+if (!require(lmtest, quietly = TRUE)){
+        install.packages("lmtest")
+      }
+```
 
 ## 1. Sumário
 
@@ -28,7 +36,6 @@ Para isso, inicialmente é feito um estudo de estatística descritiva do conjunt
 Como não se sabe, a priori, a quantidade real (ou a média real da variável aleatória *quantidade de moedas em um copo cheio de 200ml*), são propostos testes adicionais com experimentação, para aprofundar a investigação do propósito **b**, através do estudo das seguintes questões de interesse:
 
 - As estimativas rejeitam uma hipótese nula mais próxima da real? 
-- As estimativas de conjuntos de alunos são consistentes entre si?
 - As estimativas de conjuntos de alunos são sistematicamente rejeitadas por experimentação ?
 
 ## 2. Preparação e Exploração dos Dados
@@ -41,18 +48,17 @@ estimacao <- read.csv(file="./estimativa_da_sala.csv", header=TRUE, sep=";")
 
 Primeiro, as estimativas de moedas são exploradas.
 
-```{r Explorando as estimativas de Moedas}
+```{r expmoedas,fig.width=8,echo=TRUE,message=FALSE}
 summary(estimacao$Moedas)
 hist(estimacao$Moedas)
 shapiro.test(estimacao$Moedas)
 ```
 
 Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-Além disso, como não há a presença de valores discrepantes (*outliers*) significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
 
 Em seguida, as estimativas de valores são exploradas.
 
-```{r Explorando as estimativas de Valor}
+```{r exp valor}
 summary(estimacao$Valor)
 hist(estimacao$Valor)
 shapiro.test(estimacao$Valor)
@@ -89,7 +95,7 @@ Após a análise exploratória dos dados, para definir a quantidade real de moed
 \end{gather}
 
 
-```{r}
+```{r analise moedas}
 med_est_moed<-mean(estimacao$Moedas)
 desvio_pad_moed<-sd(estimacao$Moedas)
 erro_med_moed<-sd(estimacao$Moedas)/sqrt(length(estimacao$Moedas))
@@ -129,7 +135,7 @@ Da mesma forma que a primeira estimativa, os valores anotados foram conferidos e
 Após a análise exploratória dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, é calculada a média e o erro médio das estimativas.
 
 
-```{r}
+```{r analise valor}
 med_est_val<-mean(estimacao$Valor)
 desvio_pad_val<-sd(estimacao$Valor)
 erro_med_val<-sd(estimacao$Valor)/sqrt(length(estimacao$Valor))
@@ -174,13 +180,13 @@ A partir de parâmetros experimentais adequados, os resultados podem levar a dua
         
 Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). Como a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
 
-Para fins de reproducibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 43 de 5 centavos.
+Para fins de reproducibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 53 de 5 centavos.
 
 A comparação das proporções de moedas do experimetno com o meio circulante nacional são apresentadas a seguir:
 
-``` {r proporção moedas experimentos}
+``` {r coleta moedas}
 
-moedas_exp<-c(22,21,30,60,43)
+moedas_exp<-c(22,21,30,60,53)
 prop_exp<-round(moedas_exp/sum(moedas_exp)*100)
 prop_mcn<-c(16,13,14,30,28)
 moedas<-c("1","0,50","0,25","0,10","0,05")
@@ -220,7 +226,7 @@ Como o objetivo desse experimento é encontrar uma hipótese nula a ser usada na
 
 Os resultados observados após 5 amostras foi considerado satisfatório (desvio padrão relativo pequeno), para se definir uma hipótese nula.
 
-``` {r experimento moedas}
+``` {r dados moedas}
 
 experimento <- read.csv(file="./resultados_experimentais.csv", header=FALSE, sep=";")
 
@@ -238,7 +244,7 @@ cat("Desvio padrão dos resultados experimentais é:",sd(experimento$V1))
 
 Para o teste de hipóteses da prova por contradição, queremos ter certeza que, no caso de rejeição da hipótese nula, a conclusão seja forte. Dessa forma, é importante minizar o erro tipo I, que seria a rejeição da hipótese nula, quando ela é verdadeira. Por isso, será considerado um nível de confiança de 99%
 
-``` {r teste de hipoteses moeda}
+``` {r teste moedas}
 t.test(estimacao$Moedas,mu=mean(experimento$V1),conf.level = 0.99)
 
 ```
@@ -269,16 +275,16 @@ Para isso, uma alta potência será necessária e será garantida pelo cálculo 
 - $\sigma$ = 4.9 (desvio padrão do experimento realizado)
 - $\alpha$ = 0.1 (não há necessidade de baixo nível de significância)
 
-``` {r power teste para os grupos}
+``` {r power moedas}
 power.t.test(power=0.9,delta=5,sd=4.9,sig.level=0.1,type="one.sample",alternative="two.sided")
 
 ```
 
-O tamanho amostral requerido para se atingir a potência desejada, considerando os parâmetros estimados é de 10, i.e., 5 testes adicionais são necessários.
+O tamanho amostral requerido para se atingir a potência desejada, considerando os parâmetros estimados é de 10. Desta forma, 5 testes adicionais foram realizados e os resultados foram: 104, 108, 115, 116 e 111.
 
 A seguir os grupos são divididos e os valores das hipóteses nulas de cada um são calculados:
 
-``` {r criando grupos}
+``` {r grupos moedas}
 h_0<-c(0,0,0,0,0)
 aux<-0
 for (i in 1:5) {
@@ -292,7 +298,8 @@ cat("As hipóteses nulas são:",h_0)
 
 Em seguida é realizado o teste para a hipótese nula de cada grupo e os valores do intervalo de confiança, além do valor p, são guardados em uma tabela.
 
-``` {r teste t dos grupos}
+``` {r teste2 moedas}
+experimento2 <- read.csv(file="./resultados_experimentais2.csv", header=FALSE, sep=";")
 library(broom)
 conf_low<-c(0,0,0,0,0)
 conf_high<-c(0,0,0,0,0)
@@ -300,7 +307,7 @@ p_value<-c(0,0,0,0,0)
 ttest<-0
 reject<-0
 for (i in 1:5) {
-        ttest<-tidy(t.test(experimento$V1,mu=h_0[i],conf.level = 0.9))
+        ttest<-tidy(t.test(experimento2$V1,mu=h_0[i],conf.level = 0.9))
         conf_low[i]<-ttest$conf.low
         conf_high[i]<-ttest$conf.high
         p_value[i]<-ttest$p.value
@@ -316,7 +323,7 @@ cat("Os valores p dos testes foram", p_value)
 
 ```
 
-Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com potência maior do que 90% e valor p maior do que 0.009 para todos os testes, pode-se concluir que, de forma sistemática o estimador *conjunto de alunos de engenharia* produz estimativas ruins.
+Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com potência maior do que 90% e valor p maior do que 0.0006 para todos os testes, pode-se concluir que, de forma sistemática o estimador *conjunto de alunos de engenharia* produz estimativas ruins para quantidade de moedas em recipientes de 200ml.
 
 ## 5. Experimentos Adicionais - Recipiente 2
 
@@ -327,23 +334,133 @@ Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo 
 No caso do recipiente 2, não foi possível a coleta de moedas de 5 centavos em quantidade suficiente para permitir a experimentação.
 Desta forma, foi necessário a realização de aproximações e apenas uma amostra foi possível de ser coletada que será definida com a hipótese nula dos testes para o recipiente 2.
 
-
 Além disso, para que as estimativas possam ser divididas em grupos, elas deveriam ser independentes, uma vez que se há dependência entre as estimativas, não adiantaria separá-las em grupos para uma conclusão mais generalizada. Para confirmar essa expectativa de dependência entre dados, é proposto o teste Durbin-Watson, que testa a autocorrelação serial **[5]**. Se o resultado para o valor p do teste for significativamente baixo, a hipótese nula de que não há autocorrelação será rejeitada.
 
-``` {r independeica}
+``` {r durbin test}
 library(lmtest)
 dwtest(estimacao$Valor~1)
 ```
 
 Um valor p de 0.33 é muito alto, indicando que não há evidências suficientes para rejeitar a hipótese de que não há correlação. Desta forma, os grupos poderão ser separados, mas, desta vez, terão que ser testados pela Prova por Contradição, já que não é possível variar o tamanho amostral do experimento.
 
+Desta forma, todos os teste serão feitos utilizando a hipótese nula do experimento (resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+
+\begin{gather} 
+        H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e
+\end{gather}
+
+
+
 ##### 5.1.1.1 Desrição da coleta de dados
 
-O total de moedas de R\$0,05 disponível para a experimentação era de 43. Desta forma, o copo foi enchido
+O total de moedas de R\$0,05 disponível para a experimentação era de 53, que enchiam apenas até o ponto indicado na Figure 3.
+
+![Copo com as moedas de R$0,05](./foto_copo5.png)
+
+O volume preenchido foi medido por e o resultado foi de 60ml. 
+
+Para estimar a quantidade de moedas de 5 centavos no copo, assume-se que:
+
+- O copo utilizado pelo professor estava preenchido até 90% de seu volume
+- A diferença do formato do copo em sua base e no topo não causa variações significativas (uma vez que o diâmetro do copo é muito maior do que o da moeda) e o recipiente será considerado como um cilindro
+
+Note que caso essas premissas causam um certo erro na estimação da hipótese nula para valor no recipiente 2, mas ainda espera-se que esta estimativa ainda seja muito mais próxima do real do que as estimativas dos alunos. No entano, é importante ressaltar que elas constituem pontos fracos. Para melhorar este experimento, uma foto do recipiente utilizado em sala de aula poderia ter sido tirada ou um modelo de volume do copo mais fiel à realidade poderia ter sido usado.
+
+##### 5.1.1.2 Análise exploratória dos dados
+
+Considerando as questões levantadas, o resultado da estimativa é de 159 moedas, i.e. R\$ 7,95, que será utilizado como hipótese nula.
+
+##### 5.1.2 Teste de Hipóteses
+
+Mais uma vez, será utilizado um $\alpha$ de 0.01, pois deseja-se minimizar o erro do tipo I.
+
+``` {r teste2 valor}
+t.test(estimacao$Valor,mu=7.95,conf.level = 0.99)
+
+```
+
+De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=5.395e-12. Ou seja, com um nível de confiança absurdamente alto, a hipótese nula é rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
+
+Novamente, para que uma conclusão mais generalizada possa ser alcançada, outro teste deve ser proposto.
+
+#### 5.2 As estimativas de conjuntos de alunos rejeitam sistematicamente hipóteses mais reais?
+
+#### 5.2.1 Planejamento Experimental
+
+Inicialmente serão criados os grupos de estimadores. No entanto, nesta caso, recomenda-se randomizar os valores, mesmo que o teste de Durbin-Watson tenha dado resultado negativo. Essa estratégia justifica-se uma vez que não há custo nenhum associado e que espera-se que haja alguma autocorrelação sequencial pela forma como os dados foram gerados.
+
+``` {r grupos valor}
+set.seed(001) #para fins de reproducibilidade
+valor_rand<-sample(estimacao$Valor)
+h_0<-c(0,0,0,0,0)
+grupos_val<-matrix(nrow=5,ncol=6)
+for (i in 1:5) {
+        grupos_val[i,]<-valor_rand[((i-1)*6+1):((i-1)*6+6)]
+}
+```
+
+#### 5.2.1 Testes de Hipótese
+
+Em seguida é realizado o teste de hipóteses usando as estimativas de cada grupo e os valores do intervalo de confiança, além do valor p, são guardados em uma tabela.
+
+
+``` {r teste valor}
+conf_low<-c(0,0,0,0,0)
+conf_high<-c(0,0,0,0,0)
+p_value<-c(0,0,0,0,0)
+ttest<-0
+reject<-0
+for (i in 1:4) {
+        ttest<-tidy(t.test(grupos_val[i,],mu=7.95,conf.level = 0.99))
+        conf_low[i]<-ttest$conf.low
+        conf_high[i]<-ttest$conf.high
+        p_value[i]<-ttest$p.value
+        if (7.95<conf_low[i] | 7.95>conf_high[i]) {
+                reject<-reject+1
+        }
+}
+i=5 #o último grupo possui um valor NA que iria contaminar o teste
+ttest<-tidy(t.test(grupos_val[i,1:4],mu=7.95,conf.level = 0.99))
+conf_low[i]<-ttest$conf.low
+conf_high[i]<-ttest$conf.high
+p_value[i]<-ttest$p.value
+if (7.95<conf_low[i] | 7.95>conf_high[i]) {
+        reject<-reject+1
+        }
+```
+
+
+``` {r echo=FALSE}
+cat("A hipótese nula foi rejeitada", reject, "vezes do total de 5 grupos")
+cat("Os valores p dos testes foram", p_value)
+
+```
+
+
+Neste caso os estimadores rejeitaram a hipótese nula 3 de 5 vezes. Nas vezes que não rejeitou, foi devido valores p de 0.01444037 e 0.02009986 (pequeno, mas maior do que o projetado). Nesses casos o intervalo de confiança foi de R\$1.50 a R\$7.92 e R\$2.36 a R\$8,60. O que justifica tamanhos de intervalo tão grandes é a pequena quantidade de amostras.
+
+De qualquer forma, como os grupos de estimadores rejeitaram a hipótese nula sistematicamente (4 de 5), conclui-se, por contradição, que o estimador *conjuntos de alunos de engenharia* produz estimativas ruins de valor contido em recipientes de 200ml cheios de moedas de 5 centavos.
+
+## 6. Conclusões e Recomendações
+
+De acordo com os resultados obtidos, conclui-se que conjuntos de alunos de engenharia não são bons estimadores de pequenas quantidades pecuniárias em recipientes de 200ml, uma vez que:
+
+- Produzem resultados com baixa precisão (56% de desvio padrão em comparação com a média para quantidade e 34% para valor).
+- Com confiança maior do que 99% os estimadores rejeitam hipóteses nulas mais próximas do valor real e, portanto, possuem viés.
+- Sistematicamente, com mais de 90% de potência tem suas estimativas rejeitados por experimentação (5 de 5 para recipiente 1) ou com mais de 99% de confiança rejeitam hipóteses mais reais (3 de 5 para o recipiente II).
+
+Não se pode inferir sobre a qualidade do estimador para outros recipientes, no entanto. Para recipientes muito pequenos, por exemplo, a qualidade de estimação pode ser significativamente maior.
+
+Importante notar também que a experimentação para o estimador de valor no recipiente 2 foi afetada pela falta de moedas para produção de amostras. Resultados mais consistens eram esperados, caso fosse possível realizaro teste sistemático como foi feito para a quantidade de moedas no recipiente 1.
+
+Para resultados ainda satisfatórios, recomenda-se a utilização do conjunto moedas e copo utilizado pelo professor.
+
+Finalmente, para melhorar a qualidade do estimador, informações adicionais poderiam ser dadas aos alunos, e.g.: peso do copo e peso médio de moedas ou volume médio das moedas.
 
 
 
-## Referências
+## 7. Referências
+
 [1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551
 
 [2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
