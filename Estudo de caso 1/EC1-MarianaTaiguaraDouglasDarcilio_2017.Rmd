@@ -1,10 +1,10 @@
 ---
-title: 'Estudo de Caso 01: EstimaÁ„o de Quantidades Pecuni·rias'
-author: "Mariana Fonseca, Taiguara Tupinamb·s, Douglas da Silva e DarcÌlio Pereira"
+title: 'Estudo de Caso 01: Estima√ß√£o de Quantidades Pecuni√°rias'
+author: "Mariana Fonseca, Taiguara Tupinamb√°s, Douglas da Silva e Darc√≠lio Pereira"
 date: "17 de Abril, 2017"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,34 +12,34 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-## Sum·rio
+## 1. Sum√°rio
 
 Durante a aula do dia 11/04/2017 do curso *Design and Analysis of Experiments*, cada um dos 29 alunos presentes deu sua estimativa para duas perguntas do professor Felipe Campelo:
 
-1) Quantas moedas h· no recipiente 1 (um copo de 200ml com moedas variadas padr„o monet·rio Real)?
+1) Quantas moedas h√° no recipiente 1 (um copo de 200ml com moedas variadas padr√£o monet√°rio Real)?
 2) Qual o valor total contido no recipiente 2 (um copo de 200ml com moedas de R$0,05)?
 
-No primeiro caso, as estimativas foram dadas de maneira cega (sem a interaÁ„o entre alunos). No segundo caso, as estimativas foram dadas de maneira aberta (declaraÁıes sequenciais dos alunos em voz alta).
+No primeiro caso, as estimativas foram dadas de maneira cega (sem a intera√ß√£o entre alunos). No segundo caso, as estimativas foram dadas de maneira aberta (declara√ß√µes sequenciais dos alunos em voz alta).
 
-Os propÛsitos deste estudo de caso s„o, com base nas estimativas fornecidas, a) **definir a quantidade e o valor real** das perguntas acima, alÈm de b) **investigar se conjuntos de alunos de engenharia s„o bons estimadores de pequenas quantidades pecuni·rias**.
+Os prop√≥sitos deste estudo de caso s√£o, com base nas estimativas fornecidas, a) **definir a quantidade e o valor real** das perguntas acima, al√©m de b) **investigar se conjuntos de alunos de engenharia s√£o bons estimadores de pequenas quantidades pecuni√°rias**.
 
-Para isso, inicialmente ser· feito um estudo de estatÌstica descritiva do conjunto de dados coletados (as estimativas dos alunos), atravÈs de gr·ficos e descriÁıes paramÈtricas, respondendo ao propÛsito **a** e obtendo uma ideia da qualidade do estimador conjunto de alunos de engenharia. 
+Para isso, inicialmente ser√° feito um estudo de estat√≠stica descritiva do conjunto de dados coletados (as estimativas dos alunos), atrav√©s de gr√°ficos e descri√ß√µes param√©tricas, respondendo ao prop√≥sito **a** e obtendo uma ideia da qualidade do estimador conjunto de alunos de engenharia. 
 
-Como n„o se sabe, a priori, a quantidade real (ou a mÈdia real da vari·vel aleatÛria *quantidade de moedas em um copo cheio de 200ml*), s„o propostos testes adicionais com experimentaÁ„o, para aprofundar a investigaÁ„o do propÛsito **b**, atravÈs do estudo das seguintes questıes de interesse:
+Como n√£o se sabe, a priori, a quantidade real (ou a m√©dia real da vari√°vel aleat√≥ria *quantidade de moedas em um copo cheio de 200ml*), s√£o propostos testes adicionais com experimenta√ß√£o, para aprofundar a investiga√ß√£o do prop√≥sito **b**, atrav√©s do estudo das seguintes quest√µes de interesse:
 
-- As estimativas rejeitam uma hipÛtese nula mais prÛxima da real? 
-- As estimativas de conjuntos de alunos s„o consistentes entre si?
-- As estimativas de conjuntos de alunos s„o sistematicamente rejeitadas por experimentaÁ„o ?
+- As estimativas rejeitam uma hip√≥tese nula mais pr√≥xima da real? 
+- As estimativas de conjuntos de alunos s√£o consistentes entre si?
+- As estimativas de conjuntos de alunos s√£o sistematicamente rejeitadas por experimenta√ß√£o ?
 
-## PreparaÁ„o e ExploraÁ„o dos Dados
+## 2. Prepara√ß√£o e Explora√ß√£o dos Dados
 
-Os dados coletados em sala s„o carregados no R e em seguida explorados, para se ter uma ideia dos valores obtidos
+Os dados coletados em sala s√£o carregados no R e em seguida explorados, para se ter uma ideia dos valores obtidos
 
 ```{r Carregando os dados}
 estimacao <- read.csv(file="./estimativa_da_sala.csv", header=TRUE, sep=";")
 ```
 
-Primeiro, as estimativas de moedas s„o exploradas.
+Primeiro, as estimativas de moedas s√£o exploradas.
 
 ```{r Explorando as estimativas de Moedas}
 summary(estimacao$Moedas)
@@ -47,10 +47,10 @@ hist(estimacao$Moedas)
 shapiro.test(estimacao$Moedas)
 ```
 
-Os dados estimados para a quantidade de moedas tem uma distribuiÁ„o que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-AlÈm disso, como n„o a a presenÁa de *outliers* significativos e como n„o se trata de valores nominais, o par‚metro do estimador ser· definido como a mÈdia **[2]**.
+Os dados estimados para a quantidade de moedas tem uma distribui√ß√£o que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
+Al√©m disso, como n√£o a a presen√ßa de *outliers* significativos e como n√£o se trata de valores nominais, o par√¢metro do estimador ser√° definido como a m√©dia **[2]**.
 
-Em seguida, as estimativas de valores s„o exploradas.
+Em seguida, as estimativas de valores s√£o exploradas.
 
 ```{r Explorando as estimativas de Valor}
 summary(estimacao$Valor)
@@ -58,29 +58,37 @@ hist(estimacao$Valor)
 shapiro.test(estimacao$Valor)
 ```
 
-Assim como para as estimativas de moedas, a distribuiÁ„o para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.01, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuiÁ„o, pode ser explicada pela n„o independÍncia dos dados, pelo fato de terem sido coletados de forma aberta.
-De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, ser· utilizado o par‚metro mÈdia para o estimador.
+
+Assim como para as estimativas de moedas, a distribui√ß√£o para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.1, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribui√ß√£o, pode ser explicada pela n√£o independ√™ncia dos dados, pela forma como foram coletados coletados (aberta, em voz alta).
+De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, ser√° utilizado o par√¢metro m√©dia para o estimador.
 
 
-## EstatÌstica Descritiva das Estimativas
+## 3. Estat√≠stica Descritiva das Estimativas
 
-### Quantidade de Moedas no Recipiente 1
+### 3.1 Quantidade de Moedas no Recipiente 1
 
-#### DescriÁ„o da coleta de dados
+#### 3.1.1 Descri√ß√£o da coleta de dados
+
+#### DescriÔøΩÔøΩo da coleta de dados
 
 As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
 
 Assume-se que:
 
-- N„o houve interaÁ„o entre os alunos (i.e. nenhum aluno trapaceou e consultou outros a respeito das estimativas ou leu do papel de um colega alguma estimativa)
-- N„o houve erro na leitura das estimativas por parte do professor
-- N„o houve erro na anotaÁ„o das estimativas por parte do grupo
+- N√£o houve intera√ß√£o entre os alunos (i.e. nenhum aluno trapaceou e consultou outros a respeito das estimativas ou leu do papel de um colega alguma estimativa)
+- N√£o houve erro na leitura das estimativas por parte do professor
+- N√£o houve erro na anota√ß√£o das estimativas por parte do grupo
 
-No caso da ˙ltima premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrÍncia de erro. Em relaÁ„o ‡s outras premissas, a verificaÁ„o sÛ poderia ser feita caso o professor tenha guardado os papÈis ou, e.g. houvesse uma c‚mera na sala para flagrar algum aluno trapaceando as instruÁıes.
+No caso da √∫ltima premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorr√™ncia de erro. Em rela√ß√£o √†s duas primeiras, a verifica√ß√£o s√≥ poderia ser feita caso o professor tenha guardado os pap√©is ou, e.g. houvesse uma c√¢mera na sala para flagrar algum aluno trapaceando as instru√ß√µes.
 
-#### An·lise EstatÌstica
 
-ApÛs a an·lise exploratÛria dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, ser· calculada a mÈdia e o erro mÈdio das estimativas.
+#### 3.1.2 An√°lise Estat√≠stica
+
+Ap√≥s a an√°lise explorat√≥ria dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, ser√° calculada a m√©dia e o erro m√©dio das estimativas **[3]**:
+
+\begin{gather}
+        \hat{\sigma}_X=\frac{S}{\sqrt{n}}
+\end{gather}
 
 
 ```{r}
@@ -90,30 +98,37 @@ erro_med_moed<-sd(estimacao$Moedas)/sqrt(length(estimacao$Moedas))
 inter_conf_moed<-c(med_est_moed-2*erro_med_moed,med_est_moed+2*erro_med_moed)
 ```
 ```{r echo=FALSE}
-cat("Estimativa de MÈdia È:",med_est_moed)
-cat("Intervalo de ConfianÁa 95% È:",inter_conf_moed)
-cat("Desvio padr„o do estimador È:",desvio_pad_moed)
+
+cat("Estimativa de M√©dia √©:",med_est_moed)
+cat("Intervalo de Confian√ßa 95% √©:",inter_conf_moed)
+cat("Desvio padr√£o do estimador √©:",desvio_pad_moed)
 ```
 
-Desta forma, considerando que o estimador em quest„o n„o posssui viÈs, i.e. $\begin{gather} E(\Phi)=\theta \end{gather}$, a quantidade de moedas no recipiente 1, com 95% de confianÁa, È de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar o a quantidade de moedas real no recipiente 1, considerando que ele n„o tenha viÈs e que sua distribuiÁ„o seja normal.
+Desta forma, considerando que o estimador em quest√£o n√£o posssui vi√©s, i.e.:
 
-O desvio padr„o encontrado, de 49.43, indica uma dispers„o muito grande em torno da estimativa de mÈdia (56% do valor da mÈdia), o que indica uma precis„o muito pequena do estimador. 
+\begin{gather} 
+        E(\Phi)=\theta 
+\end{gather}
 
-### Valor no Recipiente 2
+A quantidade de moedas no recipiente 1, com 95% de confian√ßa, √© de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar o a quantidade de moedas real no recipiente 1, considerando que ele n√£o tenha vi√©s e que sua distribui√ß√£o seja normal.
 
-#### DescriÁ„o da coleta de dados
+O desvio padr√£o encontrado, de 49.43, indica uma dispers√£o muito grande em torno da estimativa de m√©dia (56% do valor da m√©dia), o que indica uma precis√£o muito pequena do estimador. 
+
+### 3.2 Valor no Recipiente 2
+
+#### 3.2.1 Descri√ß√£o da coleta de dados
 
 Para a segunda pergunta, as estimativas do valor contido no recipiente 2 foram dadas em voz alta, na ordem em que os alunos se encontravam e os grupos foram anotando as respostas. 
 
-Desta forma, ser· assumido apenas que:
+Desta forma, ser√° assumido apenas que:
 
-- N„o houve erro na anotaÁ„o das estimativas por parte do grupo
+- N√£o houve erro na anota√ß√£o das estimativas por parte do grupo
 
 Da mesma forma que a primeira estimativa, os valores anotados foram conferidos entre grupos para verificar essa premissa.
 
-#### An·lise EstatÌstica
+#### 3.2.2 An√°lise Estat√≠stica
 
-ApÛs a an·lise exploratÛria dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, ser· calculada a mÈdia e o erro mÈdio das estimativas.
+Ap√≥s a an√°lise explorat√≥ria dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, ser√° calculada a m√©dia e o erro m√©dio das estimativas.
 
 
 ```{r}
@@ -124,52 +139,48 @@ inter_conf_val<-c(med_est_val-2*erro_med_val,med_est_val+2*erro_med_val)
 ```
 
 ```{r echo= FALSE}
-cat("Estimativa de MÈdia È:",med_est_val)
-cat("Intervalo de ConfianÁa 95% È:",inter_conf_val)
-cat("Desvio padr„o do estimador È:",desvio_pad_val)
+cat("Estimativa de M√©dia √©:",med_est_val)
+cat("Intervalo de Confian√ßa 95% √©:",inter_conf_val)
+cat("Desvio padr√£o do estimador √©:",desvio_pad_val)
 ```
 
-Desta forma, considerando que o estimador em quest„o n„o posssui viÈs, i.e. $\begin{gather} E(\Phi)=\theta \end{gather}$, o valor contido no recipiente 2, com 95% de confianÁa, È de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele n„o tenha viÈs e que sua distribuiÁ„o seja normal.
+Desta forma, considerando que o estimador em quest√£o n√£o posssui vi√©s, o valor contido no recipiente 2, com 95% de confian√ßa, √© de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele n√£o tenha vi√©s e que sua distribui√ß√£o seja normal.
 
-The method used to derive the interval has a hit rate of
-95%" - i.e., the interval generated has a 95% chance of "capturing"
-the true population parameter.
+O desvio padr√£o encontrado, de R\$1.58, indica uma dispers√£o muito grande em torno da estimativa de m√©dia (34% do valor da m√©dia), o que significa uma precis√£o muito pequena do estimador. No entanto, observou-se um valor percentual menor do que para a quantidade de moedas, que pode ser explicado pelo m√©todo de coleta de dados, em que cada aluno pode ter sido influenciado pela opini√£o dos colegas que estimaram antes dele.
 
-O desvio padr„o encontrado, de R\$1.58, indica uma dispers„o muito grande em torno da estimativa de mÈdia (34% do valor da mÈdia), o que indica uma precis„o muito pequena do estimador. No entanto, observou-se um valor percentual menor do que para a quantidade de moedas, que pode ser explicado pelo mÈtodo de coleta de dados, em que cada aluno pode ter sido influenciado pela opini„o dos colegas que estimaram antes dele.
+### 3.3 An√°lise da Estat√≠stica Descritiva
 
-### An·lise da EstatÌstica Descritiva
+Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, neste caso, resultados pouco precisos, o que poderia indicar uma m√° qualidade na estima√ß√£o. Al√©m disso, a premissa de que eles n√£o possuem vi√©s n√£o pode ser confirmada a priori, uma vez que o valor real dos par√¢metros n√£o s√£o conhecidos. Para aprofundar essa investiga√ß√£o, novos experimentos foram propostos, atrav√©s da experimenta√ß√£o, como detalhado nas se√ß√µes seguintes.
 
-Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, neste caso, resultados pouco precisos, o que poderia indicar uma m· qualidade na estimaÁ„o. AlÈm disso, a premissa de que eles n„o possuem viÈs n„o pode ser confirmada a priori, uma vez que o valor real dos par‚metros n„o s„o conhecidos. Para aprofundar essa investigaÁ„o, novos experimentos foram propostos, atravÈs da experimentaÁ„o, como detalhado nas seÁıes seguintes.
+## 4. Experimentos Adicionais - Recipiente 1
 
-## Planejamento Experimental
+### 4.1 As estimativas rejeitam uma hip√≥tese nula mais pr√≥xima da real?
 
-Conforme mencionado no sum·rio, para aprofundar a investigaÁ„o da qualidade dos estimadores formados por "conjuntos de alunos de engenharia", s„o propostos experimentos para responder a questıes de interesse adicionais.
+#### 4.1.1 Planejamento Experimental
 
-### Recipiente I 
+O primeiro experimento a ser conduzido ter√° como m√©todo a Prova por Contradi√ß√£o atrav√©s do teste de hip√≥teses. Ou seja, atrav√©s de experimentos, ser√£o criadas amostras da popula√ß√£o de interesse, i.e. a vari√°vel aleat√≥ria *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, ser√° definida uma hip√≥tese nula (m√©dia do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
 
-#### As estimativas rejeitam uma hipÛtese nula mais prÛxima da real?
+\begin{gather} 
+        H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e
+\end{gather}
 
-O primeiro experimento a ser conduzido ter· como mÈtodo a Prova por ContradiÁ„o atravÈs do teste de hipÛteses. Ou seja, atravÈs de experimentos, ser„o criadas amostras da populaÁ„o de interesse, i.e. a vari·vel aleatÛria *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, ser· definida uma hipÛtese nula (mÈdia do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+A partir de par√¢metros experimentais adequados, os resultados poder√£o levar a duas conclus√µes:
 
-$$\begin{cases} H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e\end{cases}$$
+- $H_0$ rejeitada: como a hip√≥tese nula √© um valor mais pr√≥ximo do real, caso ela seja rejeitada, pode-se concluir que, *para este caso espec√≠fico*, conjuntos de alunos de engenharia n√£o produziram um bom estimador, uma vez que "um estimador deve ser de alguma forma pr√≥ximo do valor real do par√¢metro desconhecido", de acordo com a Se√ß√£o 7.2.1, de [3].
 
-A partir de par‚metros experimentais adequados, os resultados poder„o levar a duas conclusıes:
+- Falhou em rejeitar $H_0$: se, com as estimativas da sala, evid√™ncias suficientes n√£o foram encontradas para rejeitar a hip√≥tese nula, conclui-se que, *para este caso espec√≠fico*, conjuntos de alunos de engenharia produziram um bom estimador.
 
-- $H_0$ rejeitada: como a hipÛtese nula È um valor mais prÛximo do real, caso ela seja rejeitada, pode-se concluir que, *para este caso especÌfico*, conjuntos de alunos de engenharia n„o produziram um bom estimador, uma vez que "um estimador deve ser de alguma forma "prÛximo" do valor real do par‚metro desconhecido", de acordo com a SeÁ„o 7.2.1, de [3].
+√â importante explicar o termo destacado em it√°lico, que significa que as conclus√µes desse teste servem apenas para qualificar ou desqualificar os estimadores para uma estimativa espec√≠fica, n√£o podendo ser generalizada. Para tentar investigar mais profundamente, novos teste ser√£o necess√°rios.
 
-- Falhou em rejeitar $H_0$: se, com as estimativas da sala, evidÍncias suficientes n„o foram encontradas para rejeitar a hipÛtese nula, conclui-se que, *para este caso especÌfico*, conjuntos de alunos de engenharia produziram um bom estimador.
-
-… importante explicar o termo destacado em it·lico, que significa que as conclusıes desse teste servem apenas para qualificar ou desqualificar os estimadores para uma estimativa especÌfica, n„o podendo ser generalizada. Para tentar investigar mais profundamente, novos teste ser„o necess·rios.
-
-##### DesriÁ„o da coleta de dados
+##### 4.1.1.1 Desri√ß√£o da coleta de dados
         
-Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possÌvel ‡ real (coleta de moedas da "caixinha da paÁoca" do laboratÛrio ORCS da UFMG), a proporÁ„o de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo n„o foram inseridas na caixinha). COmo a proporÁ„o real n„o tem como ser averiguada, a proporÁ„o do experimento ser· comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informaÁ„o disponÌvel no site do Banco Central do Brasil [4].
+Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel poss√≠vel √† real (coleta de moedas da "caixinha da pa√ßoca" do laborat√≥rio ORCS da UFMG), a propor√ß√£o de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo n√£o foram inseridas na caixinha). Como a propor√ß√£o real n√£o tem como ser averiguada, a propor√ß√£o do experimento ser√° comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informa√ß√£o dispon√≠vel no site do Banco Central do Brasil [4].
 
-Para fins de reproducibilidade a quantidade de moedas de cada tipo È apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 43 de 5 centavos.
+Para fins de reproducibilidade a quantidade de moedas de cada tipo √© apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 43 de 5 centavos.
 
-A comparaÁ„o das proporÁıes de moedas do experimetno com o meio circulante nacional s„o apresentadas a seguir:
+A compara√ß√£o das propor√ß√µes de moedas do experimetno com o meio circulante nacional s√£o apresentadas a seguir:
 
-``` {r proporÁ„o moedas experimentos}
+``` {r propor√ß√£o moedas experimentos}
 
 moedas_exp<-c(22,21,30,60,43)
 prop_exp<-round(moedas_exp/sum(moedas_exp)*100)
@@ -178,28 +189,38 @@ moedas<-c("1","0,50","0,25","0,10","0,05")
 
 print(data.frame(moedas,prop_exp,prop_mcn))
 
+
+```{r echo= FALSE}
+cat("Estimativa de MÔøΩdia ÔøΩ:",med_est_val)
+cat("Intervalo de ConfianÔøΩa 95% ÔøΩ:",inter_conf_val)
+cat("Desvio padrÔøΩo do estimador ÔøΩ:",desvio_pad_val)
 ```
 
-Nota-se uma diferenÁa pequena nas proporÁıes das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximaÁ„o do experimento com o real È boa.
 
-As moedas coletadas s„o apresentadas na figura abaixo:
+Nota-se uma diferen√ßa pequena nas propor√ß√µes das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproxima√ß√£o do experimento com o real √© boa.
+
+As moedas coletadas s√£o apresentadas na Figure 1 e um exemplo de amostra √© apresentado na Figure 2.
 
 ![Moedas utilizadas no experimento](./foto_moedas.png)
-
-Um exemplo de amostra coletada È apresentado na figura abaixo:
 
 ![Exemplo de amostra](./foto_copo.png)
 
 
-As moedas foram reunidas em um estojo que era misturado antes de cada amostra. O copo era ent„o inserido no estojo e enchido de moedas para ser contado. Ao ser removido do estojo, era feita uma avaliaÁ„o pelo grupo se o nÌvel de enchimento do copo era semelhante ao do dia das estimativas e, em caso negativo, uma nova amostra era coletada.
+As moedas foram reunidas em um estojo que era misturado antes de cada amostra. O copo era ent√£o inserido no estojo e enchido de moedas para ser contado. Ao ser removido do estojo, era feita uma avalia√ß√£o pelo grupo se o n√≠vel de enchimento do copo era semelhante ao do dia das estimativas e, em caso negativo, uma nova amostra era coletada.
+
+√â importante ressaltar os pontos fracos dessas premissas:
+
+- Caso a propor√ß√£o das moedas utilizadas para encher o copo seja muito distante da utilizada no experimento ou o formato do copo seja muito diferente, as amostras observadas podem conter um vi√©s significativo, prejudicando o experimento. Para evitar esse problema, poderia-se verificar a propor√ß√£o real ou utilizar o mesmo conjunto de moedas e copo utilizado pelo professor.
+- O n√≠vel de enchimento tamb√©m pode influenciar na quantidade de amostras. O grupo tentou ser o mais fiel poss√≠vel, mas um erro sistem√°tico nessa estimativa pode gerar um vi√©s. O que poderia ter sido feito para evitar essa quest√£o √© a medi√ß√£o do espa√ßo vazio do copo utilizado na sala de aula, para que a replica√ß√£o fosse mais fiel.
+
 
 Para as amostras aprovadas, a quantidade de moedas foi contada e anotada.
 
-Como o objetivo desse experimento È encontrar uma hipÛtese nula a ser usada na prova por contradiÁ„o, n„o È necess·rio uma definiÁ„o de tamanho amostral. A quantidade de amostras foi definida de forma qualitativa, observando-se a dispers„o entre cada amostra.
+Como o objetivo desse experimento √© encontrar uma hip√≥tese nula a ser usada na prova por contradi√ß√£o, n√£o √© necess√°rio um c√°lculo de tamanho amostral. A quantidade de amostras foi definida de forma qualitativa, observando-se a dispers√£o entre cada amostra.
 
-##### An·lise ExploratÛria dos Dados
+##### 4.1.1.2 An√°lise Explorat√≥ria dos Dados
 
-Os resultados observados apÛs 5 amostras foi considerado satisfatÛrio (desvio padr„o relativo pequeno), para se definir uma hipÛtese nula.
+Os resultados observados ap√≥s 5 amostras foi considerado satisfat√≥rio (desvio padr√£o relativo pequeno), para se definir uma hip√≥tese nula.
 
 ``` {r experimento moedas}
 
@@ -210,28 +231,127 @@ experimento <- read.csv(file="./resultados_experimentais.csv", header=FALSE, sep
 
 ``` {r echo=FALSE}
 print(experimento$V1)
-cat("MÈdia dos resultados experimentais È:",mean(experimento$V1))
-cat("Desvio padr„o dos resultados experimentais È:",sd(experimento$V1))
+cat("M√©dia dos resultados experimentais √©:",mean(experimento$V1))
+cat("Desvio padr√£o dos resultados experimentais √©:",sd(experimento$V1))
 
 ```
 
-##### Teste de HipÛteses
+##### 4.1.2 Teste de Hip√≥teses
 
-Finalmente, um teste t pode ser realizado para 
+Para o teste de hip√≥teses da prova por contradi√ß√£o, queremos ter certeza que, no caso de rejei√ß√£o da hip√≥tese nula, a conclus√£o seja forte. Dessa forma, √© importante minizar o erro tipo I, que seria a rejei√ß√£o da hip√≥tese nula, quando ela √© verdadeira. Por isso, ser√° considerado um n√≠vel de confian√ßa de 99%
 
+``` {r teste de hipoteses moeda}
+t.test(estimacao$Moedas,mu=mean(experimento$V1),conf.level = 0.99)
 
+```
         
-- As estimativas rejeitam uma hipÛtese nula mais prÛxima da real? 
-- As estimativas de conjuntos de alunos s„o consistentes entre si?
-- As estimativas de conjuntos de alunos s„o sistematicamente rejeitadas por experimentaÁ„o ?
+De acordo com o resultado do teste, a hip√≥tese nula deve ser rejeitada, com valor p=0.007998. Ou seja, at√© um n√≠vel de confian√ßa de 99.2%, a hip√≥tese nula seria rejeitada. Pode-se concluir por contradi√ß√£o que, para essa estimativa espec√≠fica, o estimador conjunto de alunos de engenharia produz uma par√¢metro com vi√©s.
+
+Para que uma conclus√£o mais generalizada possa ser alcan√ßada, outro teste deve ser proposto.
+
+#### 4.2 As estimativas de conjuntos de alunos s√£o sistematicamente rejeitadas por experimenta√ß√£o?
+
+#### 4.2.1 Planejamento Experimental
+
+Para que o estimador pudesse ser testado mais vezes, para uma conclus√£o mais generalizada pudesse ser alcan√ßada, as estimativas dos alunos foram divididas em 5 grupos (4 com 5 estimativas e 1 com 4). Como as observa√ß√µes foram feitas de forma independente, n√£o h√° necessidade de randomiza√ß√£o das estimativas.
+
+Nesse caso, ser√° feita uma abordagem diferente, na qual a hip√≥tese nula ser√° a media de cada grupo ($\mu_g$) e o experimento ser√° utilizado no teste de hip√≥teses, ou seja:
+
+\begin{gather} 
+        H_0: \mu = \mu_g \\ H_1: \mu\neq\mu_g
+\end{gather}
+
+Desta forma, √© poss√≠vel se ter um maior controle do experimento, uma vez que o tamanho amostral pode ser definido para se obter os par√¢metros desejados.
+
+Nesse caso, como j√° √© esperado que a m√©dia dos grupos n√£o seja pr√≥xima da m√©dia real, √© necess√°rio minimizar o erro de tipo II.
+Para isso, uma alta pot√™ncia ser√° necess√°ria e ser√° garantida pelo c√°lculo do tamanho amostral. Os par√¢metros definidos s√£o:
+
+- Pot√™ncia = 0,90 (para evitar erros do tipo II)
+- $\delta$ = 5 (aproximadamente o desvio padr√£o do experimento j√° realizado)
+- $\sigma$ = 4.9 (desvio padr√£o do experimento realizado)
+- $\alpha$ = 0.1 (n√£o h√° necessidade de baixo n√≠vel de signific√¢ncia)
+
+``` {r power teste para os grupos}
+power.t.test(power=0.9,delta=5,sd=4.9,sig.level=0.1,type="one.sample",alternative="two.sided")
+
+```
+
+O tamanho amostral requerido para se atingir a pot√™ncia desejada, considerando os par√¢metros estimados √© de 10, i.e., 5 testes adicionais s√£o necess√°rios.
+
+A seguir os grupos s√£o divididos e os valores das hip√≥teses nulas de cada um s√£o calculados:
+
+``` {r criando grupos}
+h_0<-c(0,0,0,0,0)
+aux<-0
+for (i in 1:5) {
+        aux<-estimacao$Moedas[((i-1)*6+1):((i-1)*6+6)]
+        h_0[i]<-mean(aux,na.rm = TRUE)
+}
+```
+
+#### 4.2.1 Testes de Hip√≥tese
+
+Em seguida √© realizado o teste para a hip√≥tese nula de cada grupo e os valores do intervalo de confian√ßa, al√©m do valor p s√£o guardados em uma tabela.
+
+``` {r teste t dos grupos}
+library(broom)
+conf_low<-c(0,0,0,0,0)
+conf_high<-c(0,0,0,0,0)
+p_value<-c(0,0,0,0,0)
+ttest<-0
+reject<-0
+for (i in 1:5) {
+        ttest<-tidy(t.test(experimento$V1,mu=h_0[i],conf.level = 0.9))
+        conf_low[i]<-ttest$conf.low
+        conf_high[i]<-ttest$conf.high
+        p_value[i]<-ttest$p.value
+        if (h_0[i]<conf_low[i] | h_0[i]>conf_high[i]) {
+                reject<-reject+1
+        }
+}
+```
+
+``` {r echo=FALSE}
+cat("A hip√≥tese nula foi rejeitada", reject, "vezes do total de 5 grupos")
+cat("Os valores p dos testes foram", p_value)
+
+```
+
+Como a hip√≥tese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com pot√™ncia maior do que 90% e valor p maior do que 0.009 para todos os testes, pode-se concluir que, de forma sistem√°tica o estimador *conjunto de alunos de engenharia* produz estimativas ruins.
+
+## 5. Experimentos Adicionais - Recipiente 2
+
+### 5.1 As estimativas rejeitam uma hip√≥tese nula mais pr√≥xima da real?
+
+#### 5.1.1 Planejamento Experimental
+
+No caso do recipiente 2, n√£o foi poss√≠vel a coleta de moedas de 5 centavos em quantidade suficiente para permitir a experimenta√ß√£o.
+Desta forma, foi necess√°rio a realiza√ß√£o de aproxima√ß√µes e apenas uma amostra foi poss√≠vel de ser coletada que ser√° definida com a hip√≥tese nula dos testes para o recipiente 2.
+
+
+Al√©m disso, para que as estimativas possam ser divididas em grupos, elas deveriam ser independentes, uma vez que se h√° depend√™ncia entre as estimativas, n√£o adiantaria separ√°-las em grupos para uma conclus√£o mais generalizada. Para confirmar essa expectativa de depend√™ncia entre dados, √© proposto o teste Durbin-Watson, que testa a autocorrela√ß√£o serial **[5]**. Se o resultado para o valor p do teste for significativamente baixo, a hip√≥tese nula de que n√£o h√° autocorrela√ß√£o ser√° rejeitada.
+
+``` {r independeica}
+library(lmtest)
+dwtest(estimacao$Valor~1)
+```
+
+Um valor p de 0.33 √© muito alto, indicando que n√£o h√° evid√™ncias suficientes para rejeitar a hip√≥tese de que n√£o h√° correla√ß√£o. Desta forma, os grupos poder√£o ser separados, mas, desta vez, ter√£o que ser testados pela Prova por Contradi√ß√£o, j√° que n√£o √© poss√≠vel variar o tamanho amostral do experimento.
+
+##### 5.1.1.1 Desri√ß√£o da coleta de dados
+
+O total de moedas de R\$0,05 dispon√≠vel para a experimenta√ß√£o era de 43. Desta forma, o copo foi enchido
 
 
 
-## ReferÍncias
-[1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551.
+## Refer√™ncias
+[1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551
 
 [2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
 
-[3] D.C. Montgomery, G.C. Runger, Applied Statistics and Probability for Engineers, 5th ed., Wiley, 2010.
+[3] D.C. Montgomery, G.C. Runger, Applied Statistics and Probability for Engineers, 5th ed., Wiley, 2010
 
 [4] http://www4.bcb.gov.br/adm/mecir/principal.asp. Acessado em 13/04/2017
+
+[5] Felipe Campelo, Lecture Notes on Design and Analysis of Experiments. UFMG, Belo Horizonte, Brasil (2014)
+
