@@ -23,7 +23,7 @@ No primeiro caso, as estimativas foram dadas de maneira cega (sem a interação 
 
 Os propósitos deste estudo de caso são, com base nas estimativas fornecidas, a) **definir a quantidade e o valor real** das perguntas acima, além de b) **investigar se conjuntos de alunos de engenharia são bons estimadores de pequenas quantidades pecuniárias**.
 
-Para isso, inicialmente será feito um estudo de estatística descritiva do conjunto de dados coletados (as estimativas dos alunos), através de gráficos e descrições paramétricas, respondendo ao propósito **a** e obtendo uma ideia da qualidade do estimador conjunto de alunos de engenharia. 
+Para isso, inicialmente é feito um estudo de estatística descritiva do conjunto de dados coletados (as estimativas dos alunos), através de gráficos e descrições paramétricas, respondendo ao propósito **a** e obtendo uma ideia da qualidade do estimador conjunto de alunos de engenharia. 
 
 Como não se sabe, a priori, a quantidade real (ou a média real da variável aleatória *quantidade de moedas em um copo cheio de 200ml*), são propostos testes adicionais com experimentação, para aprofundar a investigação do propósito **b**, através do estudo das seguintes questões de interesse:
 
@@ -48,7 +48,7 @@ shapiro.test(estimacao$Moedas)
 ```
 
 Os dados estimados para a quantidade de moedas tem uma distribuição que pode ser aproximada da normal, uma vez que o valor p<<<0.1 para o teste Shapiro-Wilk. **[1]**.
-Além disso, como não a a presença de *outliers* significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
+Além disso, como não há a presença de valores discrepantes (*outliers*) significativos e como não se trata de valores nominais, o parâmetro do estimador será definido como a média **[2]**.
 
 Em seguida, as estimativas de valores são exploradas.
 
@@ -59,7 +59,7 @@ shapiro.test(estimacao$Valor)
 ```
 
 
-Assim como para as estimativas de moedas, a distribuição para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.1, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuição, pode ser explicada pela não independência dos dados, pela forma como foram coletados coletados (aberta, em voz alta).
+Assim como para as estimativas de moedas, a distribuição para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.1, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuição pode ser explicada pela não independência dos dados, devido à forma como foram coletados (aberta, em voz alta).
 De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, será utilizado o parâmetro média para o estimador.
 
 
@@ -69,22 +69,20 @@ De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativa
 
 #### 3.1.1 Descrição da coleta de dados
 
-#### Descri��o da coleta de dados
-
 As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
 
 Assume-se que:
 
-- Não houve interação entre os alunos (i.e. nenhum aluno trapaceou e consultou outros a respeito das estimativas ou leu do papel de um colega alguma estimativa)
-- Não houve erro na leitura das estimativas por parte do professor
-- Não houve erro na anotação das estimativas por parte do grupo
+- Não houve interação entre os alunos (i.e. nenhum aluno trapaceou e consultou outros a respeito das estimativas ou leu do papel de um colega alguma estimativa).
+- Não houve erro na leitura das estimativas por parte do professor.
+- Não houve erro na anotação das estimativas por parte do grupo.
 
 No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às duas primeiras, a verificação só poderia ser feita caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
 
 
 #### 3.1.2 Análise Estatística
 
-Após a análise exploratória dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas **[3]**:
+Após a análise exploratória dos dados, para definir a quantidade real de moedas no recipiente 1, baseado nos dados coletados em sala, é calculada a média e o erro médio das estimativas **[3]**:
 
 \begin{gather}
         \hat{\sigma}_X=\frac{S}{\sqrt{n}}
@@ -110,7 +108,7 @@ Desta forma, considerando que o estimador em questão não posssui viés, i.e.:
         E(\Phi)=\theta 
 \end{gather}
 
-A quantidade de moedas no recipiente 1, com 95% de confiança, é de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar o a quantidade de moedas real no recipiente 1, considerando que ele não tenha viés e que sua distribuição seja normal.
+A quantidade de moedas no recipiente 1, com 95% de confiança, é de 89 $\pm$ 18. Ou seja, este intervalo tem uma chance de 95% de capturar a quantidade de moedas real no recipiente 1, considerando que ele não tenha viés e que sua distribuição seja normal.
 
 O desvio padrão encontrado, de 49.43, indica uma dispersão muito grande em torno da estimativa de média (56% do valor da média), o que indica uma precisão muito pequena do estimador. 
 
@@ -128,7 +126,7 @@ Da mesma forma que a primeira estimativa, os valores anotados foram conferidos e
 
 #### 3.2.2 Análise Estatística
 
-Após a análise exploratória dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, será calculada a média e o erro médio das estimativas.
+Após a análise exploratória dos dados, para definir o valor real de moedas no recipiente 2, baseado nos dados coletados em sala, é calculada a média e o erro médio das estimativas.
 
 
 ```{r}
@@ -158,13 +156,13 @@ Os estimadores para quantidade de moedas e valor em copos de 200ml produziram, n
 
 #### 4.1.1 Planejamento Experimental
 
-O primeiro experimento a ser conduzido terá como método a Prova por Contradição através do teste de hipóteses. Ou seja, através de experimentos, serão criadas amostras da população de interesse, i.e. a variável aleatória *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, será definida uma hipótese nula (média do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+O primeiro experimento conduzido tem como método a Prova por Contradição através do teste de hipóteses. Ou seja, através de experimentos, são criadas amostras da população de interesse, i.e. a variável aleatória *quantidade de moedas em um copo de 200ml cheio de moedas variadas*. A partir das amostras, é definida uma hipótese nula (média do resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
 
 \begin{gather} 
         H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e
 \end{gather}
 
-A partir de parâmetros experimentais adequados, os resultados poderão levar a duas conclusões:
+A partir de parâmetros experimentais adequados, os resultados podem levar a duas conclusões:
 
 - $H_0$ rejeitada: como a hipótese nula é um valor mais próximo do real, caso ela seja rejeitada, pode-se concluir que, *para este caso específico*, conjuntos de alunos de engenharia não produziram um bom estimador, uma vez que "um estimador deve ser de alguma forma próximo do valor real do parâmetro desconhecido", de acordo com a Seção 7.2.1, de [3].
 
@@ -191,15 +189,15 @@ print(data.frame(moedas,prop_exp,prop_mcn))
 
 
 ```{r echo= FALSE}
-cat("Estimativa de M�dia �:",med_est_val)
-cat("Intervalo de Confian�a 95% �:",inter_conf_val)
-cat("Desvio padr�o do estimador �:",desvio_pad_val)
+cat("Estimativa de Média é:",med_est_val)
+cat("Intervalo de Confiança 95% é:",inter_conf_val)
+cat("Desvio padrão do estimador é:",desvio_pad_val)
 ```
 
 
 Nota-se uma diferença pequena nas proporções das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximação do experimento com o real é boa.
 
-As moedas coletadas são apresentadas na Figure 1 e um exemplo de amostra é apresentado na Figure 2.
+As moedas coletadas são apresentadas na Fig. 1 e um exemplo de amostra é apresentado na Fig. 2.
 
 ![Moedas utilizadas no experimento](./foto_moedas.png)
 
@@ -245,7 +243,7 @@ t.test(estimacao$Moedas,mu=mean(experimento$V1),conf.level = 0.99)
 
 ```
         
-De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=0.007998. Ou seja, até um nível de confiança de 99.2%, a hipótese nula seria rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz uma parâmetro com viés.
+De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=0.007998. Ou seja, até um nível de confiança de 99.2%, a hipótese nula seria rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
 
 Para que uma conclusão mais generalizada possa ser alcançada, outro teste deve ser proposto.
 
@@ -253,9 +251,9 @@ Para que uma conclusão mais generalizada possa ser alcançada, outro teste deve
 
 #### 4.2.1 Planejamento Experimental
 
-Para que o estimador pudesse ser testado mais vezes, para uma conclusão mais generalizada pudesse ser alcançada, as estimativas dos alunos foram divididas em 5 grupos (4 com 5 estimativas e 1 com 4). Como as observações foram feitas de forma independente, não há necessidade de randomização das estimativas.
+Para que o estimador pudesse ser testado mais vezes, para uma conclusão mais generalizada pudesse ser alcançada, as estimativas dos alunos foram divididas em 5 grupos (4 grupos com 5 estimativas e 1 grupo com 4). Como as observações foram feitas de forma independente, não há necessidade de randomização das estimativas.
 
-Nesse caso, será feita uma abordagem diferente, na qual a hipótese nula será a media de cada grupo ($\mu_g$) e o experimento será utilizado no teste de hipóteses, ou seja:
+Nesse caso, será feita uma abordagem diferente, na qual a hipótese nula é a média de cada grupo ($\mu_g$) e o experimento é utilizado no teste de hipóteses, ou seja:
 
 \begin{gather} 
         H_0: \mu = \mu_g \\ H_1: \mu\neq\mu_g
@@ -287,11 +285,12 @@ for (i in 1:5) {
         aux<-estimacao$Moedas[((i-1)*6+1):((i-1)*6+6)]
         h_0[i]<-mean(aux,na.rm = TRUE)
 }
+cat("As hipóteses nulas são:",h_0)
 ```
 
 #### 4.2.1 Testes de Hipótese
 
-Em seguida é realizado o teste para a hipótese nula de cada grupo e os valores do intervalo de confiança, além do valor p são guardados em uma tabela.
+Em seguida é realizado o teste para a hipótese nula de cada grupo e os valores do intervalo de confiança, além do valor p, são guardados em uma tabela.
 
 ``` {r teste t dos grupos}
 library(broom)
