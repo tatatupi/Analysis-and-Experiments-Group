@@ -1,4 +1,4 @@
-        ---
+---
 title: 'Estudo de Caso 01: Estimação de Quantidades Pecuniárias'
 author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Pereira"
 date: "17 de Abril, 2017"
