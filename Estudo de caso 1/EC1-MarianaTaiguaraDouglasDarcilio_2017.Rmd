@@ -58,6 +58,7 @@ hist(estimacao$Valor)
 shapiro.test(estimacao$Valor)
 ```
 
+
 Assim como para as estimativas de moedas, a distribuição para as estimativas de valor pode ser assumida como normal pelo mesmo motivo, p<0.1, mas com um valor significativamente maior. O maior resultado de p, significando uma "menor normalidade" na distribuição, pode ser explicada pela não independência dos dados, pela forma como foram coletados coletados (aberta, em voz alta).
 De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativas de moedas, será utilizado o parâmetro média para o estimador.
 
@@ -68,6 +69,8 @@ De qualquer forma, pelos resultados e pelas mesmas justificativas das estimativa
 
 #### 3.1.1 Descrição da coleta de dados
 
+#### Descri��o da coleta de dados
+
 As estimativas dos alunos para a primeira pergunta foram escritas em folhas de papel e entregues ao professor, que informou aos alunos o valor de cada uma. 
 
 Assume-se que:
@@ -77,6 +80,7 @@ Assume-se que:
 - Não houve erro na anotação das estimativas por parte do grupo
 
 No caso da última premissa, outros grupos foram consultados e os valores conferidos, de forma a minimizar a chance de ocorrência de erro. Em relação às duas primeiras, a verificação só poderia ser feita caso o professor tenha guardado os papéis ou, e.g. houvesse uma câmera na sala para flagrar algum aluno trapaceando as instruções.
+
 
 #### 3.1.2 Análise Estatística
 
@@ -94,6 +98,7 @@ erro_med_moed<-sd(estimacao$Moedas)/sqrt(length(estimacao$Moedas))
 inter_conf_moed<-c(med_est_moed-2*erro_med_moed,med_est_moed+2*erro_med_moed)
 ```
 ```{r echo=FALSE}
+
 cat("Estimativa de Média é:",med_est_moed)
 cat("Intervalo de Confiança 95% é:",inter_conf_moed)
 cat("Desvio padrão do estimador é:",desvio_pad_moed)
@@ -184,7 +189,13 @@ moedas<-c("1","0,50","0,25","0,10","0,05")
 
 print(data.frame(moedas,prop_exp,prop_mcn))
 
+
+```{r echo= FALSE}
+cat("Estimativa de M�dia �:",med_est_val)
+cat("Intervalo de Confian�a 95% �:",inter_conf_val)
+cat("Desvio padr�o do estimador �:",desvio_pad_val)
 ```
+
 
 Nota-se uma diferença pequena nas proporções das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximação do experimento com o real é boa.
 
@@ -343,3 +354,4 @@ O total de moedas de R\$0,05 disponível para a experimentação era de 43. Dest
 [4] http://www4.bcb.gov.br/adm/mecir/principal.asp. Acessado em 13/04/2017
 
 [5] Felipe Campelo, Lecture Notes on Design and Analysis of Experiments. UFMG, Belo Horizonte, Brasil (2014)
+
