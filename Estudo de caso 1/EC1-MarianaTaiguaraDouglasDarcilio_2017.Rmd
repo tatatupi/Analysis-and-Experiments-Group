@@ -7,6 +7,8 @@ output:
   html_document:
     fig_height: 4
     fig_width: 6
+header-includes:
+  \usepackage[portuguese]{babel}
 ---
 
 
@@ -108,7 +110,7 @@ cat("Intervalo de Confiança 95% é:",inter_conf_moed)
 cat("Desvio padrão do estimador é:",desvio_pad_moed)
 ```
 
-Desta forma, considerando que o estimador em questão não posssui viés, i.e.:
+Desta forma, considerando que o estimador em questão não possui viés, i.e.:
 
 \begin{gather} 
         E(\Phi)=\theta 
@@ -148,7 +150,7 @@ cat("Intervalo de Confiança 95% é:",inter_conf_val)
 cat("Desvio padrão do estimador é:",desvio_pad_val)
 ```
 
-Desta forma, considerando que o estimador em questão não posssui viés, o valor contido no recipiente 2, com 95% de confiança, é de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele não tenha viés e que sua distribuição seja normal.
+Desta forma, considerando que o estimador em questão não possui viés, o valor contido no recipiente 2, com 95% de confiança, é de R\$4.60 $\pm$ R\$0.60. Ou seja, este intervalo tem uma chance de 95% de capturar o valor real contido no recipiente 2, considerando que ele não tenha viés e que sua distribuição seja normal.
 
 O desvio padrão encontrado, de R\$1.58, indica uma dispersão muito grande em torno da estimativa de média (34% do valor da média), o que significa uma precisão muito pequena do estimador. No entanto, observou-se um valor percentual menor do que para a quantidade de moedas, que pode ser explicado pelo método de coleta de dados, em que cada aluno pode ter sido influenciado pela opinião dos colegas que estimaram antes dele.
 
@@ -178,11 +180,11 @@ A partir de parâmetros experimentais adequados, os resultados podem levar a dua
 
 ##### 4.1.1.1 Desrição da coleta de dados
         
-Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas, de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de 1 real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). Como a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
+Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de um real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). Como a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
 
-Para fins de reproducibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 53 de 5 centavos.
+Para fins de reprodutibilidade a quantidade de moedas de cada tipo é apresentada: 22 moedas de 1 real, 21 moedas de 50 centavos, 30 de 25 centavos, 60 de 10 centavos e 53 de 5 centavos.
 
-A comparação das proporções de moedas do experimetno com o meio circulante nacional são apresentadas a seguir:
+A comparação das proporções de moedas do experimento com o meio circulante nacional são apresentadas a seguir:
 
 ``` {r coleta moedas}
 
@@ -203,7 +205,7 @@ cat("Desvio padrão do estimador é:",desvio_pad_val)
 
 Nota-se uma diferença pequena nas proporções das moedas do experimentos com as moedas do meio circulante nacional, o que sugere que a aproximação do experimento com o real é boa.
 
-As moedas coletadas são apresentadas na Fig. 1 e um exemplo de amostra é apresentado na Fig. 2.
+As moedas coletadas são apresentadas na figura 1 e um exemplo de amostra é apresentado na figura 2.
 
 ![Moedas utilizadas no experimento](./foto_moedas.png)
 
@@ -224,7 +226,7 @@ Como o objetivo desse experimento é encontrar uma hipótese nula a ser usada na
 
 ##### 4.1.1.2 Análise Exploratória dos Dados
 
-Os resultados observados após 5 amostras foi considerado satisfatório (desvio padrão relativo pequeno), para se definir uma hipótese nula.
+Os resultados observados após cinco amostras foi considerado satisfatório (desvio padrão relativo pequeno), para se definir uma hipótese nula.
 
 ``` {r dados moedas}
 
@@ -242,14 +244,14 @@ cat("Desvio padrão dos resultados experimentais é:",sd(experimento$V1))
 
 ##### 4.1.2 Teste de Hipóteses
 
-Para o teste de hipóteses da prova por contradição, queremos ter certeza que, no caso de rejeição da hipótese nula, a conclusão seja forte. Dessa forma, é importante minizar o erro tipo I, que seria a rejeição da hipótese nula, quando ela é verdadeira. Por isso, será considerado um nível de confiança de 99%
+Para o teste de hipóteses da prova por contradição, queremos ter certeza que, no caso de rejeição da hipótese nula, a conclusão seja forte. Dessa forma, é importante minimizar o erro tipo I, que seria a rejeição da hipótese nula quando ela é verdadeira. Por esse motivo, foi considerado um nível de confiança de 99%
 
 ``` {r teste moedas}
 t.test(estimacao$Moedas,mu=mean(experimento$V1),conf.level = 0.99)
 
 ```
         
-De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=0.007998. Ou seja, até um nível de confiança de 99.2%, a hipótese nula seria rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
+De acordo com o resultado do teste, a hipótese nula deve ser rejeitada com valor p=0.007998. Ou seja, até um nível de confiança de 99.2%, a hipótese nula seria rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
 
 Para que uma conclusão mais generalizada possa ser alcançada, outro teste deve ser proposto.
 
@@ -257,9 +259,9 @@ Para que uma conclusão mais generalizada possa ser alcançada, outro teste deve
 
 #### 4.2.1 Planejamento Experimental
 
-Para que o estimador pudesse ser testado mais vezes, para uma conclusão mais generalizada pudesse ser alcançada, as estimativas dos alunos foram divididas em 5 grupos (4 grupos com 5 estimativas e 1 grupo com 4). Como as observações foram feitas de forma independente, não há necessidade de randomização das estimativas.
+Para que o estimador pudesse ser testado mais vezes, para uma conclusão mais generalizada pudesse ser alcançada, as estimativas dos alunos foram divididas em cinco grupos (quatro grupos com cinco estimativas e um grupo com quatro). Como as observações foram feitas de forma independente, não há necessidade de randomização das estimativas.
 
-Nesse caso, será feita uma abordagem diferente, na qual a hipótese nula é a média de cada grupo ($\mu_g$) e o experimento é utilizado no teste de hipóteses, ou seja:
+Nesse caso, é feita uma abordagem diferente, na qual a hipótese nula é a média de cada grupo ($\mu_g$) e o experimento é utilizado no teste de hipóteses, ou seja:
 
 \begin{gather} 
         H_0: \mu = \mu_g \\ H_1: \mu\neq\mu_g
@@ -268,7 +270,7 @@ Nesse caso, será feita uma abordagem diferente, na qual a hipótese nula é a m
 Desta forma, é possível se ter um maior controle do experimento, uma vez que o tamanho amostral pode ser definido para se obter os parâmetros desejados.
 
 Nesse caso, como já é esperado que a média dos grupos não seja próxima da média real, é necessário minimizar o erro de tipo II.
-Para isso, uma alta potência será necessária e será garantida pelo cálculo do tamanho amostral. Os parâmetros definidos são:
+Para isso, uma alta potência é necessária e será garantida pelo cálculo do tamanho amostral. Os parâmetros definidos são:
 
 - Potência = 0,90 (para evitar erros do tipo II)
 - $\delta$ = 5 (aproximadamente o desvio padrão do experimento já realizado)
@@ -280,7 +282,7 @@ power.t.test(power=0.9,delta=5,sd=4.9,sig.level=0.1,type="one.sample",alternativ
 
 ```
 
-O tamanho amostral requerido para se atingir a potência desejada, considerando os parâmetros estimados é de 10. Desta forma, 5 testes adicionais foram realizados e os resultados foram: 104, 108, 115, 116 e 111.
+O tamanho amostral requerido para se atingir a potência desejada, considerando os parâmetros estimados é de dez. Desta forma, cinco testes adicionais foram realizados e os resultados foram: 104, 108, 115, 116 e 111.
 
 A seguir os grupos são divididos e os valores das hipóteses nulas de cada um são calculados:
 
@@ -323,7 +325,7 @@ cat("Os valores p dos testes foram", p_value)
 
 ```
 
-Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com potência maior do que 90% e valor p maior do que 0.0006 para todos os testes, pode-se concluir que, de forma sistemática o estimador *conjunto de alunos de engenharia* produz estimativas ruins para quantidade de moedas em recipientes de 200ml.
+Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo experimento, com potência maior do que 90% e valor p maior do que 0.0006 para todos os testes, pode-se concluir que, de forma sistemática, o estimador *conjunto de alunos de engenharia* produz estimativas ruins para quantidade de moedas em recipientes de 200ml.
 
 ## 5. Experimentos Adicionais - Recipiente 2
 
@@ -331,8 +333,8 @@ Como a hipótese nula (estimativa dos grupos) foi rejeitada todas as vezes pelo 
 
 #### 5.1.1 Planejamento Experimental
 
-No caso do recipiente 2, não foi possível a coleta de moedas de 5 centavos em quantidade suficiente para permitir a experimentação.
-Desta forma, foi necessário a realização de aproximações e apenas uma amostra foi possível de ser coletada que será definida com a hipótese nula dos testes para o recipiente 2.
+No caso do recipiente 2, não foi possível a coleta de moedas de cinco centavos em quantidade suficiente para permitir a experimentação.
+Desta forma, foi necessário a realização de aproximações e apenas uma amostra foi possível de ser coletada, sendo essa definida com a hipótese nula dos testes para o recipiente 2.
 
 Além disso, para que as estimativas possam ser divididas em grupos, elas deveriam ser independentes, uma vez que se há dependência entre as estimativas, não adiantaria separá-las em grupos para uma conclusão mais generalizada. Para confirmar essa expectativa de dependência entre dados, é proposto o teste Durbin-Watson, que testa a autocorrelação serial **[5]**. Se o resultado para o valor p do teste for significativamente baixo, a hipótese nula de que não há autocorrelação será rejeitada.
 
@@ -341,9 +343,9 @@ library(lmtest)
 dwtest(estimacao$Valor~1)
 ```
 
-Um valor p de 0.33 é muito alto, indicando que não há evidências suficientes para rejeitar a hipótese de que não há correlação. Desta forma, os grupos poderão ser separados, mas, desta vez, terão que ser testados pela Prova por Contradição, já que não é possível variar o tamanho amostral do experimento.
+Um valor p de 0.33 é muito alto, indicando que não há evidências suficientes para rejeitar a hipótese de que não há correlação. Desta forma, os grupos podem ser separados, mas, desta vez, devem ser testados pela Prova por Contradição, já que não é possível variar o tamanho amostral do experimento.
 
-Desta forma, todos os teste serão feitos utilizando a hipótese nula do experimento (resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
+Desta forma, todos os testes foram feitos utilizando a hipótese nula do experimento (resultado experimental $\mu_e$) a ser testada pelas estimativas produzidas em sala:
 
 \begin{gather} 
         H_0: \mu = \mu_e \\ H_1: \mu\neq\mu_e
@@ -353,18 +355,18 @@ Desta forma, todos os teste serão feitos utilizando a hipótese nula do experim
 
 ##### 5.1.1.1 Desrição da coleta de dados
 
-O total de moedas de R\$0,05 disponível para a experimentação era de 53, que enchiam apenas até o ponto indicado na Figure 3.
+O total de moedas de R\$0,05 disponível para a experimentação foi de 53, sendo que elas enchiam apenas até o ponto indicado na figura 3.
 
 ![Copo com as moedas de R$0,05](./foto_copo5.png)
 
-O volume preenchido foi medido por e o resultado foi de 60ml. 
+O volume preenchido foi medido e o resultado foi de 60ml. 
 
-Para estimar a quantidade de moedas de 5 centavos no copo, assume-se que:
+Para estimar a quantidade de moedas de cinco centavos no copo, assume-se que:
 
 - O copo utilizado pelo professor estava preenchido até 90% de seu volume
 - A diferença do formato do copo em sua base e no topo não causa variações significativas (uma vez que o diâmetro do copo é muito maior do que o da moeda) e o recipiente será considerado como um cilindro
 
-Note que caso essas premissas causam um certo erro na estimação da hipótese nula para valor no recipiente 2, mas ainda espera-se que esta estimativa ainda seja muito mais próxima do real do que as estimativas dos alunos. No entano, é importante ressaltar que elas constituem pontos fracos. Para melhorar este experimento, uma foto do recipiente utilizado em sala de aula poderia ter sido tirada ou um modelo de volume do copo mais fiel à realidade poderia ter sido usado.
+Note que essas premissas podem causar um certo erro na estimação da hipótese nula para valor no recipiente 2, mas ainda espera-se que esta estimativa seja muito mais próxima do real do que as estimativas dos alunos. No entanto, é importante ressaltar que elas constituem pontos fracos. Para melhorar este experimento, uma foto do recipiente utilizado em sala de aula poderia ter sido tirada ou um modelo de volume do copo mais fiel à realidade poderia ter sido usado.
 
 ##### 5.1.1.2 Análise exploratória dos dados
 
@@ -379,7 +381,7 @@ t.test(estimacao$Valor,mu=7.95,conf.level = 0.99)
 
 ```
 
-De acordo com o resultado do teste, a hipótese nula deve ser rejeitada, com valor p=5.395e-12. Ou seja, com um nível de confiança absurdamente alto, a hipótese nula é rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
+De acordo com o resultado do teste, a hipótese nula deve ser rejeitada com valor p=5.395e-12. Ou seja, com um nível de confiança absurdamente alto, a hipótese nula é rejeitada. Pode-se concluir por contradição que, para essa estimativa específica, o estimador conjunto de alunos de engenharia produz um parâmetro com viés.
 
 Novamente, para que uma conclusão mais generalizada possa ser alcançada, outro teste deve ser proposto.
 
@@ -387,7 +389,7 @@ Novamente, para que uma conclusão mais generalizada possa ser alcançada, outro
 
 #### 5.2.1 Planejamento Experimental
 
-Inicialmente serão criados os grupos de estimadores. No entanto, nesta caso, recomenda-se randomizar os valores, mesmo que o teste de Durbin-Watson tenha dado resultado negativo. Essa estratégia justifica-se uma vez que não há custo nenhum associado e que espera-se que haja alguma autocorrelação sequencial pela forma como os dados foram gerados.
+Inicialmente serão criados os grupos de estimadores. No entanto, neste caso, recomenda-se randomizar os valores, mesmo que o teste de Durbin-Watson tenha dado resultado negativo. Essa estratégia justifica-se uma vez que não há custo nenhum associado e que espera-se que haja alguma autocorrelação sequencial pela forma como os dados foram gerados.
 
 ``` {r grupos valor}
 set.seed(001) #para fins de reproducibilidade
@@ -437,9 +439,9 @@ cat("Os valores p dos testes foram", p_value)
 ```
 
 
-Neste caso os estimadores rejeitaram a hipótese nula 3 de 5 vezes. Nas vezes que não rejeitou, foi devido valores p de 0.01444037 e 0.02009986 (pequeno, mas maior do que o projetado). Nesses casos o intervalo de confiança foi de R\$1.50 a R\$7.92 e R\$2.36 a R\$8,60. O que justifica tamanhos de intervalo tão grandes é a pequena quantidade de amostras.
+Neste caso os estimadores rejeitaram a hipótese nula 3 de 5 vezes. Nas vezes que não rejeitou, foi devido valores p de 0.01444037 e 0.02009986 (pequeno, mas maior do que o projetado). Nesses casos o intervalo de confiança foi de R\$1.50 a R\$7.92 e R\$2.36 a R\$8.60. O que justifica tamanhos de intervalo tão grandes é a pequena quantidade de amostras.
 
-De qualquer forma, como os grupos de estimadores rejeitaram a hipótese nula sistematicamente (4 de 5), conclui-se, por contradição, que o estimador *conjuntos de alunos de engenharia* produz estimativas ruins de valor contido em recipientes de 200ml cheios de moedas de 5 centavos.
+De qualquer forma, como os grupos de estimadores rejeitaram a hipótese nula sistematicamente (quatro de cinco), conclui-se, por contradição, que o estimador *conjuntos de alunos de engenharia* produz estimativas ruins de valor contido em recipientes de 200ml cheios de moedas de cinco centavos.
 
 ## 6. Conclusões e Recomendações
 
@@ -451,7 +453,7 @@ De acordo com os resultados obtidos, conclui-se que conjuntos de alunos de engen
 
 Não se pode inferir sobre a qualidade do estimador para outros recipientes, no entanto. Para recipientes muito pequenos, por exemplo, a qualidade de estimação pode ser significativamente maior.
 
-Importante notar também que a experimentação para o estimador de valor no recipiente 2 foi afetada pela falta de moedas para produção de amostras. Resultados mais consistens eram esperados, caso fosse possível realizaro teste sistemático como foi feito para a quantidade de moedas no recipiente 1.
+Importante notar também que a experimentação para o estimador de valor no recipiente 2 foi afetada pela falta de moedas para produção de amostras. Resultados mais consistentes eram esperados, caso fosse possível realizar o teste sistemático como foi feito para a quantidade de moedas no recipiente 1.
 
 Para resultados ainda satisfatórios, recomenda-se a utilização do conjunto moedas e copo utilizado pelo professor.
 
@@ -461,13 +463,13 @@ Finalmente, para melhorar a qualidade do estimador, informações adicionais pod
 
 ## 7. Referências
 
-[1] Patrick Royston (1995) Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, 547-551
+[1] Royston, P. (1995). Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, pp. 547-551.
 
 [2] https://www.wyzant.com/resources/lessons/math/prealgebra/representing-data. Acessado em 13/04/2017
 
-[3] D.C. Montgomery, G.C. Runger, Applied Statistics and Probability for Engineers, 5th ed., Wiley, 2010
+[3] Montgomery, D.C., Runger, G.C. (2010). Applied Statistics and Probability for Engineers, 5th ed., Wiley.
 
 [4] http://www4.bcb.gov.br/adm/mecir/principal.asp. Acessado em 13/04/2017
 
-[5] Felipe Campelo, Lecture Notes on Design and Analysis of Experiments. UFMG, Belo Horizonte, Brasil (2014)
+[5] Campelo, F. (2015) Lecture Notes on Design and Analysis of Experiments. UFMG, Belo Horizonte, Brasil.
 
