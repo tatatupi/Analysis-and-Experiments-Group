@@ -52,7 +52,7 @@ Primeiro, as estimativas de moedas são exploradas.
 
 ```{r expmoedas,fig.width=8,echo=TRUE,message=FALSE}
 summary(estimacao$Moedas)
-hist(estimacao$Moedas)
+hist(estimacao$Moedas, xlab="Quantidade estimada", ylab="Frequência", main="Histograma da estimação do número de moedas")
 shapiro.test(estimacao$Moedas)
 ```
 
@@ -62,7 +62,7 @@ Em seguida, as estimativas de valores são exploradas.
 
 ```{r exp valor}
 summary(estimacao$Valor)
-hist(estimacao$Valor)
+hist(estimacao$Valor, xlab="Valor estimado", ylab="Frequência", main="Histograma da estimação do valor total")
 shapiro.test(estimacao$Valor)
 ```
 
