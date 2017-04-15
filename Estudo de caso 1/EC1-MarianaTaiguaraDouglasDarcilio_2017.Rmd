@@ -27,7 +27,7 @@ if (!require(lmtest, quietly = TRUE)){
 Durante a aula do dia 11/04/2017 do curso *Design and Analysis of Experiments*, cada um dos 29 alunos presentes deu sua estimativa para duas perguntas do professor Felipe Campelo:
 
 1) Quantas moedas há no recipiente 1 (um copo de 200ml com moedas variadas padrão monetário Real)?
-2) Qual o valor total contido no recipiente 2 (um copo de 200ml com moedas de R$0,05)?
+2) Qual o valor total contido no recipiente 2 (um copo de 200ml com moedas de R$0.05)?
 
 No primeiro caso, as estimativas foram dadas de maneira cega (sem a interação entre alunos). No segundo caso, as estimativas foram dadas de maneira aberta (declarações sequenciais dos alunos em voz alta).
 
@@ -191,7 +191,7 @@ A comparação das proporções de moedas do experimento com o meio circulante n
 moedas_exp<-c(22,21,30,60,53)
 prop_exp<-round(moedas_exp/sum(moedas_exp)*100)
 prop_mcn<-c(16,13,14,30,28)
-moedas<-c("1","0,50","0,25","0,10","0,05")
+moedas<-c("1","0.50","0.25","0.10","0.05")
 
 print(data.frame(moedas,prop_exp,prop_mcn))
 
@@ -272,7 +272,7 @@ Desta forma, é possível se ter um maior controle do experimento, uma vez que o
 Nesse caso, como já é esperado que a média dos grupos não seja próxima da média real, é necessário minimizar o erro de tipo II.
 Para isso, uma alta potência é necessária e será garantida pelo cálculo do tamanho amostral. Os parâmetros definidos são:
 
-- Potência = 0,90 (para evitar erros do tipo II)
+- Potência = 0.90 (para evitar erros do tipo II)
 - $\delta$ = 5 (aproximadamente o desvio padrão do experimento já realizado)
 - $\sigma$ = 4.9 (desvio padrão do experimento realizado)
 - $\alpha$ = 0.1 (não há necessidade de baixo nível de significância)
@@ -355,9 +355,9 @@ Desta forma, todos os testes foram feitos utilizando a hipótese nula do experim
 
 ##### 5.1.1.1 Desrição da coleta de dados
 
-O total de moedas de R\$0,05 disponível para a experimentação foi de 53, sendo que elas enchiam apenas até o ponto indicado na figura 3.
+O total de moedas de R\$0.05 disponível para a experimentação foi de 53, sendo que elas enchiam apenas até o ponto indicado na figura 3.
 
-![Copo com as moedas de R$0,05](./foto_copo5.png)
+![Copo com as moedas de R$0.05](./foto_copo5.png)
 
 O volume preenchido foi medido e o resultado foi de 60ml. 
 
@@ -370,7 +370,7 @@ Note que essas premissas podem causar um certo erro na estimação da hipótese 
 
 ##### 5.1.1.2 Análise exploratória dos dados
 
-Considerando as questões levantadas, o resultado da estimativa é de 159 moedas, i.e. R\$ 7,95, que será utilizado como hipótese nula.
+Considerando as questões levantadas, o resultado da estimativa é de 159 moedas, i.e. R\$ 7.95, que será utilizado como hipótese nula.
 
 ##### 5.1.2 Teste de Hipóteses
 
