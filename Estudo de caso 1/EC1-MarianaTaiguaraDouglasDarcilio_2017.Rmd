@@ -459,9 +459,20 @@ Para resultados ainda satisfatórios, recomenda-se a utilização do conjunto mo
 
 Finalmente, para melhorar a qualidade do estimador, informações adicionais poderiam ser dadas aos alunos, e.g.: peso do copo e peso médio de moedas ou volume médio das moedas.
 
+## 7. Papéis desempenhados pelos integrantes
+
+Os papéis desempenhados por cada membro da equipe foram os seguintes:
+
+- **Mariana Fonseca**: verificadora
+
+- **Taiguara Tupinambás**: relator
+
+- **Douglas da Silva**: coordenador
+
+- **Darcílio Pereira**: monitor
 
 
-## 7. Referências
+## 8. Referências
 
 [1] Royston, P. (1995). Remark AS R94: A remark on Algorithm AS 181: The W test for normality. Applied Statistics, 44, pp. 547-551.
 
