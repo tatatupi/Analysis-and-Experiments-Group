@@ -178,7 +178,7 @@ A partir de parâmetros experimentais adequados, os resultados podem levar a dua
 
 É importante explicar o termo destacado em itálico, que significa que as conclusões desse teste servem apenas para qualificar ou desqualificar os estimadores para uma estimativa específica, não podendo ser generalizada. Para tentar investigar mais profundamente, novos teste serão necessários.
 
-##### 4.1.1.1 Desrição da coleta de dados
+##### 4.1.1.1 Descrição da coleta de dados
         
 Um copo de 200ml semelhante ao utilizado pelo professor e diversas moedas dos variados tipos foram coletadas de forma que a quantidade total fosse muito maior do que a capacidade do copo. Para que as amostras fossem feitas da forma mais fiel possível à real (coleta de moedas da "caixinha da paçoca" do laboratório ORCS da UFMG), a proporção de moedas de um real, cinquenta, vinte e cinco, dez e cinco centavos deveria ser igual (considerando que moedas de 1 centavo não foram inseridas na caixinha). Como a proporção real não tem como ser averiguada, a proporção do experimento será comparado ao meio circulante nacional do dia 11/04/2017 (data esperada da coleta de moedas), informação disponível no site do Banco Central do Brasil [4].
 
@@ -353,7 +353,7 @@ Desta forma, todos os testes foram feitos utilizando a hipótese nula do experim
 
 
 
-##### 5.1.1.1 Desrição da coleta de dados
+##### 5.1.1.1 Descrição da coleta de dados
 
 O total de moedas de R\$0.05 disponível para a experimentação foi de 53, sendo que elas enchiam apenas até o ponto indicado na figura 3.
 
