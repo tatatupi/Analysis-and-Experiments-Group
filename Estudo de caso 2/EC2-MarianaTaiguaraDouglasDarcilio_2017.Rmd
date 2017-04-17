@@ -1,0 +1,97 @@
+---
+title: 'Estudo de Caso 02:'
+author: "Mariana Fonseca, Taiguara Tupinambás, Douglas da Silva e Darcílio Pereira"
+date: "24 de Abril, 2017"
+output:
+  pdf_document: default
+  html_document:
+    fig_height: 4
+    fig_width: 6
+header-includes:
+  \usepackage[portuguese]{babel}
+---
+
+
+```{r include=FALSE,results='hide',warning=FALSE,echo=FALSE}
+
+ if (!require(broom, quietly = TRUE)){
+        install.packages("broom")
+      }
+if (!require(lmtest, quietly = TRUE)){
+        install.packages("lmtest")
+      }
+```
+
+## 1. Sumário
+
+
+
+## 2. Preparação e exploração dos dados
+
+
+
+## 3. Estatística descritiva das estimativas
+
+
+#### 3.1.2 Análise estatística
+
+
+#### 3.2.2 Análise estatística
+
+
+
+### 3.3 Análise da estatística descritiva
+
+
+
+## 4. Experimentos adicionais 
+
+### 4.1 As estimativas rejeitam uma hipótese nula mais próxima da real?
+
+#### 4.1.1 Planejamento experimental
+
+
+
+##### 4.1.1.1 Descrição da coleta de dados
+        
+
+
+##### 4.1.1.2 Análise exploratória dos dados
+
+
+
+##### 4.1.2 Teste de hipóteses
+
+
+
+#### 4.2.1 Planejamento experimental
+
+
+
+#### 4.2.1 Testes de hipótese
+
+
+
+## 6. Conclusões e recomendações
+
+
+
+## 7. Papéis desempenhados pelos integrantes da equipe
+
+Os papéis desempenhados por cada membro da equipe foram os seguintes:
+
+- **Mariana Fonseca**: relatora
+
+- **Taiguara Tupinambás**: coordenador
+
+- **Douglas da Silva**: monitor
+
+- **Darcílio Pereira**: verificador
+
+
+## 8. Referências
+
+[1] Montgomery, D.C., Runger, G.C. (2010). Applied Statistics and Probability for Engineers, 5th ed., Wiley.
+
+[2] Campelo, F. (2015) Lecture Notes on Design and Analysis of Experiments. UFMG, Belo Horizonte, Brasil.
+
